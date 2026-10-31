@@ -1,0 +1,17 @@
+✔ Finalization closes the sixth breached endpoint day rather than hiding it (9.461488ms)
+✔ A year-late observation is not evidence of a completed quarterly schedule (5.301834ms)
+✔ A closed quarter followed by an unmodeled quarter is incomplete (4.047745ms)
+✔ Emergency recertification cannot silently restart a completed 365-day episode (5.365951ms)
+✔ Even a later asserted new crisis is undefined rather than an invented cool-off (4.261768ms)
+✔ Denominator overhang retains origin over repeated shrinking quarters (5.384769ms)
+✔ Supported policy edits consistently drive both helper and engine growth limits (0.85002ms)
+✔ Brake thresholds, floor, feedback and maximum all come from policy (0.303708ms)
+✔ Unknown operational settings and invented policy-gap resolutions are rejected (0.779524ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.996522

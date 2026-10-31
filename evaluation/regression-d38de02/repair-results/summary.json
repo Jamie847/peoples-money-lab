@@ -1,0 +1,42 @@
+{
+  "baselineCommit": "d38de02536f6df020344c5651d65d9138207efb4",
+  "specificationSha256": "0eea163f953986126ad1f4244d05b4cc23ce66dbb76430aba38b531db111c2ee",
+  "publicSpecificationSha256": "af9d67d31f361536f0e29ecbad9678351945fdfcb06a3ac62324bd721bd76320",
+  "evaluatedAt": "2026-10-31T02:54:01.860Z",
+  "cases": 3,
+  "assertions": 950,
+  "counts": {
+    "PASS": 3,
+    "FAIL": 0,
+    "POLICY_UNDEFINED": 0,
+    "UNIMPLEMENTED": 0
+  },
+  "independentAudit": "Every event before/after snapshot checked by separate BigInt rational balance-sheet, counterpart, ownership, exposure and flow checker",
+  "scope": "Frozen 18-case specification, not economic validation; rejected invalid events can be successful tests. Policy gaps and unimplemented paths are not complete passes.",
+  "results": [
+    {
+      "id": "R01",
+      "name": "Sixth-day endpoint is checked by finalization",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 306,
+      "notes": []
+    },
+    {
+      "id": "R02",
+      "name": "Completed versus unmodeled horizon remains distinct",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 228,
+      "notes": []
+    },
+    {
+      "id": "R03",
+      "name": "Expiry cannot be followed by silent episode reset",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 416,
+      "notes": []
+    }
+  ]
+}

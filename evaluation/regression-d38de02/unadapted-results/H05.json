@@ -1,0 +1,3288 @@
+{
+  "id": "H05",
+  "name": "Repeated four-day breaches with daily reset",
+  "classification": "PASS",
+  "scope": "defined mechanics",
+  "notes": [
+    "Literal consecutive-day rule permits recurrent breaches. This is a policy limitation, not a failed implementation."
+  ],
+  "trace": [
+    {
+      "event": {
+        "id": "H05-29",
+        "type": "begin_quarter",
+        "date": "2027-01-01",
+        "path": "100"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [],
+      "before": {
+        "date": "2027-01-01",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": null,
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": null
+      },
+      "after": {
+        "date": "2027-01-01",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {
+        "allowance": "0"
+      }
+    },
+    {
+      "event": {
+        "id": "H05-30",
+        "type": "tax",
+        "date": "2027-01-04",
+        "amount": ".1"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [
+        [
+          "Authority",
+          "M",
+          "-1/10"
+        ],
+        [
+          "Authority",
+          "T",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "cash",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "equity",
+          "1/10"
+        ],
+        [
+          "Public",
+          "money",
+          "-1/10"
+        ],
+        [
+          "Public",
+          "equity",
+          "-1/10"
+        ]
+      ],
+      "before": {
+        "date": "2027-01-01",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-04",
+        "epoch": 0,
+        "R": "100",
+        "M": "959/10",
+        "B": "1",
+        "T": "31/10",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "959/10"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "31/10"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "31/10"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "31/10"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "859/10"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-131/10"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-31",
+        "type": "spend",
+        "date": "2027-01-08",
+        "amount": ".1"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [
+        [
+          "Authority",
+          "T",
+          "-1/10"
+        ],
+        [
+          "Authority",
+          "M",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "cash",
+          "-1/10"
+        ],
+        [
+          "Treasury",
+          "equity",
+          "-1/10"
+        ],
+        [
+          "Public",
+          "money",
+          "1/10"
+        ],
+        [
+          "Public",
+          "equity",
+          "1/10"
+        ]
+      ],
+      "before": {
+        "date": "2027-01-04",
+        "epoch": 0,
+        "R": "100",
+        "M": "959/10",
+        "B": "1",
+        "T": "31/10",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "959/10"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "31/10"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "31/10"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "31/10"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "859/10"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-131/10"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-08",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-32",
+        "type": "close_day",
+        "date": "2027-01-08"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [],
+      "before": {
+        "date": "2027-01-08",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-08",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-33",
+        "type": "tax",
+        "date": "2027-01-11",
+        "amount": ".1"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [
+        [
+          "Authority",
+          "M",
+          "-1/10"
+        ],
+        [
+          "Authority",
+          "T",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "cash",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "equity",
+          "1/10"
+        ],
+        [
+          "Public",
+          "money",
+          "-1/10"
+        ],
+        [
+          "Public",
+          "equity",
+          "-1/10"
+        ]
+      ],
+      "before": {
+        "date": "2027-01-08",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-11",
+        "epoch": 0,
+        "R": "100",
+        "M": "959/10",
+        "B": "1",
+        "T": "31/10",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "959/10"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "31/10"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "31/10"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "31/10"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "859/10"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-131/10"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-34",
+        "type": "spend",
+        "date": "2027-01-15",
+        "amount": ".1"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [
+        [
+          "Authority",
+          "T",
+          "-1/10"
+        ],
+        [
+          "Authority",
+          "M",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "cash",
+          "-1/10"
+        ],
+        [
+          "Treasury",
+          "equity",
+          "-1/10"
+        ],
+        [
+          "Public",
+          "money",
+          "1/10"
+        ],
+        [
+          "Public",
+          "equity",
+          "1/10"
+        ]
+      ],
+      "before": {
+        "date": "2027-01-11",
+        "epoch": 0,
+        "R": "100",
+        "M": "959/10",
+        "B": "1",
+        "T": "31/10",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "959/10"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "31/10"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "31/10"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "31/10"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "859/10"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-131/10"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-15",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-35",
+        "type": "close_day",
+        "date": "2027-01-15"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [],
+      "before": {
+        "date": "2027-01-15",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-15",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-36",
+        "type": "tax",
+        "date": "2027-01-18",
+        "amount": ".1"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [
+        [
+          "Authority",
+          "M",
+          "-1/10"
+        ],
+        [
+          "Authority",
+          "T",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "cash",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "equity",
+          "1/10"
+        ],
+        [
+          "Public",
+          "money",
+          "-1/10"
+        ],
+        [
+          "Public",
+          "equity",
+          "-1/10"
+        ]
+      ],
+      "before": {
+        "date": "2027-01-15",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-18",
+        "epoch": 0,
+        "R": "100",
+        "M": "959/10",
+        "B": "1",
+        "T": "31/10",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "959/10"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "31/10"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "31/10"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "31/10"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "859/10"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-131/10"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-37",
+        "type": "spend",
+        "date": "2027-01-22",
+        "amount": ".1"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [
+        [
+          "Authority",
+          "T",
+          "-1/10"
+        ],
+        [
+          "Authority",
+          "M",
+          "1/10"
+        ],
+        [
+          "Treasury",
+          "cash",
+          "-1/10"
+        ],
+        [
+          "Treasury",
+          "equity",
+          "-1/10"
+        ],
+        [
+          "Public",
+          "money",
+          "1/10"
+        ],
+        [
+          "Public",
+          "equity",
+          "1/10"
+        ]
+      ],
+      "before": {
+        "date": "2027-01-18",
+        "epoch": 0,
+        "R": "100",
+        "M": "959/10",
+        "B": "1",
+        "T": "31/10",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "959/10"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "31/10"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "31/10"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "31/10"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "859/10"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-131/10"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-22",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    },
+    {
+      "event": {
+        "id": "H05-38",
+        "type": "close_day",
+        "date": "2027-01-22"
+      },
+      "status": "PASS",
+      "applied": true,
+      "issues": [],
+      "entries": [],
+      "before": {
+        "date": "2027-01-22",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "after": {
+        "date": "2027-01-22",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "detail": {}
+    }
+  ],
+  "assertions": 789,
+  "engineReports": [
+    {
+      "schemaVersion": 2,
+      "policyVersion": "0.7.1-accounting-translation.2",
+      "status": "POLICY_UNDEFINED",
+      "completeness": "INCOMPLETE",
+      "events": 10,
+      "applied": 10,
+      "issues": [
+        {
+          "status": "POLICY_UNDEFINED",
+          "code": "INCOMPLETE_QUARTER",
+          "date": "2027-01-22",
+          "message": "An open quarter is a partial ledger, not a completed policy schedule"
+        }
+      ],
+      "snapshot": {
+        "date": "2027-01-22",
+        "epoch": 0,
+        "R": "100",
+        "M": "96",
+        "B": "1",
+        "T": "3",
+        "path": "100",
+        "P": "0",
+        "U": "0",
+        "exposure": "0",
+        "positiveDeviation": "0",
+        "cap": "2",
+        "accounts": {
+          "Authority": {
+            "conversion": {
+              "type": "A",
+              "value": "100"
+            },
+            "conversionAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "facility": {
+              "type": "A",
+              "value": "0"
+            },
+            "facilityAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "M": {
+              "type": "L",
+              "value": "96"
+            },
+            "B": {
+              "type": "L",
+              "value": "1"
+            },
+            "T": {
+              "type": "L",
+              "value": "3"
+            },
+            "equity": {
+              "type": "E",
+              "value": "0"
+            }
+          },
+          "Bank": {
+            "loans": {
+              "type": "A",
+              "value": "100"
+            },
+            "loanAllowance": {
+              "type": "A",
+              "value": "0"
+            },
+            "money": {
+              "type": "A",
+              "value": "10"
+            },
+            "investment": {
+              "type": "L",
+              "value": "0"
+            },
+            "conversion": {
+              "type": "L",
+              "value": "100"
+            },
+            "facility": {
+              "type": "L",
+              "value": "0"
+            },
+            "equity": {
+              "type": "E",
+              "value": "10"
+            }
+          },
+          "Treasury": {
+            "cash": {
+              "type": "A",
+              "value": "3"
+            },
+            "parked": {
+              "type": "A",
+              "value": "1"
+            },
+            "ordinary": {
+              "type": "L",
+              "value": "0"
+            },
+            "bills": {
+              "type": "L",
+              "value": "1"
+            },
+            "equity": {
+              "type": "E",
+              "value": "3"
+            }
+          },
+          "Public": {
+            "money": {
+              "type": "A",
+              "value": "86"
+            },
+            "investment": {
+              "type": "A",
+              "value": "0"
+            },
+            "ordinary": {
+              "type": "A",
+              "value": "0"
+            },
+            "bills": {
+              "type": "A",
+              "value": "1"
+            },
+            "loans": {
+              "type": "L",
+              "value": "100"
+            },
+            "equity": {
+              "type": "E",
+              "value": "-13"
+            }
+          }
+        },
+        "quarter": {
+          "id": "2027-01-01",
+          "priorR": "100",
+          "allowance": "0",
+          "issued": "0"
+        }
+      },
+      "daily": [
+        {
+          "date": "2027-01-01",
+          "T": "3",
+          "R": "100",
+          "cashBreach": false,
+          "consecutiveBusinessDays": 0,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-04",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 1,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-05",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 2,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-06",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 3,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-07",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 4,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-08",
+          "T": "3",
+          "R": "100",
+          "cashBreach": false,
+          "consecutiveBusinessDays": 0,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-11",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 1,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-12",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 2,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-13",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 3,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-14",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 4,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-15",
+          "T": "3",
+          "R": "100",
+          "cashBreach": false,
+          "consecutiveBusinessDays": 0,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-18",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 1,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-19",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 2,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-20",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 3,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-21",
+          "T": "31/10",
+          "R": "100",
+          "cashBreach": true,
+          "consecutiveBusinessDays": 4,
+          "facilityExposure": "0"
+        },
+        {
+          "date": "2027-01-22",
+          "T": "3",
+          "R": "100",
+          "cashBreach": false,
+          "consecutiveBusinessDays": 0,
+          "facilityExposure": "0"
+        }
+      ],
+      "epochChanges": [],
+      "emergencyEpisodes": [],
+      "denominatorOverhang": null,
+      "scope": "Synthetic accounting only; not economics, legal validation, access resilience or a national conversion estimate"
+    }
+  ]
+}

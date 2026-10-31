@@ -27,3 +27,16 @@ Use a new, empty output directory. The harness refuses a different commit, dirty
 ## Follow-on repairs
 
 A separate audit identified incomplete endpoint reporting, emergency timer restart ambiguity, persistent denominator-overhang provenance, and duplicated policy parameters. Those issues received a subsequent repair commit and explicit regression tests. Baseline history and first-pass outcomes are retained. A rerun after these fixes is post-repair regression evidence, not unseen validation. The nine generated paths totaling 105 synthetic years are accounting fixtures, not 105 economic stress tests.
+
+## Recorded post-disclosure regression
+
+Commit `d38de02536f6df020344c5651d65d9138207efb4` was independently evaluated in a clean checkout. The [full regression report](../evaluation/regression-d38de02/REPORT.md) and immutable results distinguish:
+
+- Unchanged scenario harness (commit pin updated only): 18 cases, 9,229 assertions, **9 PASS / 6 POLICY_UNDEFINED / 3 UNIMPLEMENTED / 0 FAIL**.
+- Explicit endpoint-finalized adaptation: the same 18 cases, 11,073 assertions, the same outcomes.
+- Three additional independent repair checks: 3 PASS, 950 assertions.
+- The nine builder-authored audit regression tests were also independently executed: 9 PASS.
+
+Do not sum overlapping assertion counts into a number of independent scenarios. This is post-disclosure regression, not new held-out evidence. No accounting mismatch was demonstrated. The remaining six undefined policies and three implementation limits remain unresolved. The archived first-pass package is unchanged.
+
+The regression package's REPORT.md gives commands for its three portable harnesses. Use a clean checkout pinned to `d38de02536f6df020344c5651d65d9138207efb4` and fresh output directories. Package hashes are retained in its SHA256.json.

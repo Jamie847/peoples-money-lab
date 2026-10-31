@@ -67,6 +67,8 @@ A one-day time step is not intraday settlement. Several features are conservativ
 
 The frozen baseline evaluation found **9 fully passed cases, 6 policy-undefined cases, and 3 unimplemented cases**. No accounting failure was demonstrated; this is not “18 passed.” Full first-pass evidence and separate post-audit repairs are described in [evaluation](docs/evaluation.md).
 
+The subsequent **post-disclosure regression** retained those outcomes: the unchanged scenario harness checked 9,229 assertions; the endpoint-finalized adaptation checked 11,073; three separate repair checks checked 950. These overlapping checks must not be added together as distinct scenarios or called new held-out evidence. See the [regression report](evaluation/regression-d38de02/REPORT.md).
+
 ## Reproducibility and review
 
 This code and its tests were developed with AI assistance. Earlier checks were also AI-assisted. They are not an independent professional audit. Human review in monetary economics, banking operations and law remains necessary. The original independently authored assessment was run against a frozen commit and is preserved before repairs; see [`docs/evaluation.md`](docs/evaluation.md).
