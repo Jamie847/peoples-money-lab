@@ -1,0 +1,23 @@
+{
+  "version": "0.7.1-accounting-translation.1",
+  "ordinaryFacilityCap": "0.02",
+  "emergencyFacilityCap": "0.05",
+  "treasuryQuarterEndRatio": "0.01",
+  "treasuryDailyRatio": "0.03",
+  "treasuryMaximumBreachBusinessDays": 5,
+  "facilityMaximumContractDays": 90,
+  "emergencyInitialDays": 90,
+  "emergencyMaximumDays": 365,
+  "safeAssetFloorRatio": "0.01",
+  "brakeLambda": "0.5",
+  "brakeTriggerLogGap": "0.03",
+  "brakeReleaseLogGap": "0.01",
+  "brakeMaximumRatio": "0.03",
+  "annualPathGrowthMinimum": 0,
+  "annualPathGrowthMaximum": 0.04,
+  "emergencyExpiryOverhang": "POLICY_UNDEFINED",
+  "auctionNonClearanceResponse": "POLICY_UNDEFINED",
+  "quarterEndCashBreachDuringCure": "POLICY_UNDEFINED",
+  "calendarConvention": "Monday-Friday, excluding explicitly configured holidays; not a statutory calendar",
+  "moneyArithmetic": "exact rational amounts; transcendental price/growth computations use JavaScript binary64 and are imported as decimal strings"
+}

@@ -1,0 +1,116 @@
+import fs from 'node:fs';
+import {q,sum} from './rational.mjs';
+import {syntheticOpening,get,post,audit,journals,encodeAccounts,decodeAccounts} from './ledger.mjs';
+import {addDays,dayNumber,isBusinessDay,quarterEnd,nextQuarterEnd,lastBusinessDay} from './calendar.mjs';
+import {clearAuction} from './rules.mjs';
+export const POLICY=JSON.parse(fs.readFileSync(new URL('../config/policy-0.7.1.json',import.meta.url),'utf8'));
+const rank={PASS:0,POLICY_UNDEFINED:1,FAIL:2};
+export const worst=items=>items.reduce((s,x)=>rank[x.status]>rank[s]?x.status:s,'PASS');
+class Rejection extends Error {constructor(code,message,status='FAIL'){super(message);this.code=code;this.status=status;}}
+const require=(condition,code,message,status)=>{if(!condition)throw new Rejection(code,message,status);};
+export class Engine {
+  constructor({migration='0.4',date='2027-01-01',holidays=[],opening=null}={}){
+    const initial=opening??syntheticOpening(migration);this.accounts=decodeAccounts(encodeAccounts(initial.accounts));this.metadata=structuredClone(initial.metadata);this.path=q(initial.path??initial.metadata.R);this.U=q(initial.U??0);this.lastNetIncome=q(0);this.epoch=0;this.date=date;dayNumber(date);this.holidays=[...holidays];this.quarter=null;this.emergency=null;this.cashStreak=0;this.cashObligations=[];this.lastClosed=null;this.loans=get(this.accounts,'Authority','facility').cmp(0)>0?{opening:{principal:get(this.accounts,'Authority','facility'),maturity:null,origin:null}}:{};this.bills={opening:{principal:get(this.accounts,'Treasury','bills'),maturity:null}};this.history=[];this.issues=[];this.ids=new Set();this.daily=[];this.previousCap=null;this.previousCapRate=null;this.lastQuarterKey=null;this.epochChanges=[];this.assertInvariants();
+  }
+  R(){return sum(['M','B','T'].map(a=>get(this.accounts,'Authority',a)));}
+  P(){return get(this.accounts,'Authority','facility');}
+  exposure(){return this.P().add(this.U);}
+  cap(){return this.quarter?this.quarter.priorR.mul(this.emergency?POLICY.emergencyFacilityCap:POLICY.ordinaryFacilityCap):null;}
+  snapshot(){return{date:this.date,epoch:this.epoch,R:this.R().toString(),M:get(this.accounts,'Authority','M').toString(),B:get(this.accounts,'Authority','B').toString(),T:get(this.accounts,'Authority','T').toString(),path:this.path.toString(),P:this.P().toString(),U:this.U.toString(),exposure:this.exposure().toString(),positiveDeviation:this.R().sub(this.path).max(0).toString(),cap:this.cap()?.toString()??null,accounts:encodeAccounts(this.accounts),quarter:this.quarter?{id:this.quarter.id,priorR:this.quarter.priorR.toString(),allowance:this.quarter.allowance.toString(),issued:this.quarter.issued.toString()}:null};}
+  checkpoint(){return{accounts:encodeAccounts(this.accounts),path:this.path.toString(),U:this.U.toString(),lastNetIncome:this.lastNetIncome.toString(),epoch:this.epoch,date:this.date,quarter:this.quarter?{...this.quarter,priorR:this.quarter.priorR.toString(),allowance:this.quarter.allowance.toString(),issued:this.quarter.issued.toString(),netIncome:this.quarter.netIncome.toString(),remitted:this.quarter.remitted.toString(),remittanceBudget:this.quarter.remittanceBudget.toString()}:null,emergency:this.emergency?{...this.emergency}:null,cashStreak:this.cashStreak,cashObligations:this.cashObligations.map(x=>({...x,remaining:x.remaining.toString()})),lastClosed:this.lastClosed,loans:Object.fromEntries(Object.entries(this.loans).map(([k,v])=>[k,{...v,principal:v.principal.toString()}])),bills:Object.fromEntries(Object.entries(this.bills).map(([k,v])=>[k,{...v,principal:v.principal.toString()}])),dailyLength:this.daily.length,issuesLength:this.issues.length,previousCap:this.previousCap?.toString()??null,previousCapRate:this.previousCapRate,lastQuarterKey:this.lastQuarterKey,epochChangesLength:this.epochChanges.length};}
+  restore(c){this.accounts=decodeAccounts(c.accounts);this.path=q(c.path);this.U=q(c.U);this.lastNetIncome=q(c.lastNetIncome);for(const k of ['epoch','date','emergency','cashStreak','lastClosed'])this[k]=c[k];this.quarter=c.quarter?{...c.quarter,priorR:q(c.quarter.priorR),allowance:q(c.quarter.allowance),issued:q(c.quarter.issued),netIncome:q(c.quarter.netIncome),remitted:q(c.quarter.remitted),remittanceBudget:q(c.quarter.remittanceBudget)}:null;this.cashObligations=c.cashObligations.map(x=>({...x,remaining:q(x.remaining)}));this.loans=Object.fromEntries(Object.entries(c.loans).map(([k,v])=>[k,{...v,principal:q(v.principal)}]));this.bills=Object.fromEntries(Object.entries(c.bills).map(([k,v])=>[k,{...v,principal:q(v.principal)}]));this.daily.length=c.dailyLength;this.issues.length=c.issuesLength;this.previousCap=c.previousCap===null?null:q(c.previousCap);this.lastQuarterKey=c.lastQuarterKey;this.previousCapRate=c.previousCapRate;this.epochChanges.length=c.epochChangesLength;}
+  note(status,code,message,extra={}){const issue={status,code,message,date:this.date,...extra};this.issues.push(issue);return issue;}
+  closeDay(){
+    if(this.lastClosed===this.date)return;
+    if(isBusinessDay(this.date,this.holidays)){
+      const breached=get(this.accounts,'Authority','T').cmp(this.R().mul(POLICY.treasuryDailyRatio))>0;
+      this.cashStreak=breached?this.cashStreak+1:0;
+      if(this.cashStreak>POLICY.treasuryMaximumBreachBusinessDays)this.note('FAIL','TREASURY_CURE_EXCEEDED','Treasury exceeds 3% of R for more than five consecutive configured business-day closes',{days:this.cashStreak});
+      this.daily.push({date:this.date,T:get(this.accounts,'Authority','T').toString(),R:this.R().toString(),cashBreach:breached,consecutiveBusinessDays:this.cashStreak,facilityExposure:this.exposure().toString()});
+    }
+    for(const o of this.cashObligations)if(this.date>=o.deadline&&o.remaining.cmp(0)>0&&!o.failed){o.failed=true;this.note('FAIL','TREASURY_QUARTER_CURE_MISSED','Recorded quarter-end excess was not disbursed by cure deadline',{remaining:o.remaining.toString(),deadline:o.deadline});}
+    this.lastClosed=this.date;
+  }
+  advance(date){require(dayNumber(date)>=dayNumber(this.date),'TIME_REVERSED','Events must be in nondecreasing date order');while(this.date<date){this.closeDay();this.date=addDays(this.date,1);}
+    if(this.emergency&&date>=this.emergency.expiry){this.emergency=null;if(this.exposure().cmp((this.quarter?this.quarter.priorR:this.R()).mul(POLICY.ordinaryFacilityCap))>0)this.note('POLICY_UNDEFINED','EMERGENCY_EXPIRY_OVERHANG','Exposure remains above ordinary cap when emergency expires; no disposal or grandfathering rule is invented');}
+  }
+  dischargeObligations(amount){let spend=q(amount);for(const o of this.cashObligations){const applied=o.remaining.min(spend);o.remaining=o.remaining.sub(applied);spend=spend.sub(applied);if(spend.eq(0))break;}}
+  assertInvariants(){audit(this.accounts);require(this.U.cmp(0)>=0,'NEGATIVE_RESIDUAL','Residual cannot be negative');require(this.R().sub(this.path).max(0).cmp(this.exposure())<=0,'EXPOSURE_BOUND','Positive deviation exceeds unpaid principal plus residual');require(sum(Object.values(this.loans).map(x=>x.principal)).eq(this.P()),'LOAN_REGISTER','Facility register does not match gross loan principal');require(sum(Object.values(this.bills).map(x=>x.principal)).eq(get(this.accounts,'Authority','B')),'BILL_REGISTER','Bill register does not match parked principal');}
+  execute(event){
+    const c=this.checkpoint(),before=this.snapshot(),startIssue=this.issues.length;let applied=false,entries=[],detail={};
+    try{
+      require(typeof event.id==='string'&&event.id.length>0,'EVENT_ID','Each event requires a nonempty ID');require(!this.ids.has(event.id),'DUPLICATE_EVENT','Duplicate event rejected');
+      this.advance(event.date);require(this.lastClosed!==event.date||event.type==='close_day','DAY_CLOSED','Cannot post after a date has closed');
+      const amount=q(event.amount??0);require(amount.cmp(0)>=0,'NEGATIVE_AMOUNT','Transaction amounts must be nonnegative');
+      const needQuarter=()=>require(this.quarter,'NO_QUARTER','Begin a quarter before this operation');
+      if(['issue','spend','tax','borrow','redeemDebt','draw','repayFacility','repayConversion','collectPrincipal','collectInterest','payInterest','redeemInvestment','impairFacility','impairConversion','impairBankLoan','discharge','auction','maturity'].includes(event.type)){needQuarter();require(this.date<=this.quarter.end,'QUARTER_EXPIRED','No financial postings after the active quarter closes; weekend-boundary settlement remains outside this daily convention');}
+      const useJournal=(name,a=amount)=>{entries=journals[name](a);post(this.accounts,entries);};
+      switch(event.type){
+        case 'begin_quarter': {
+          require(!this.quarter,'QUARTER_OPEN','Close the current quarter first');
+          const target=q(event.path);require(target.cmp(this.path)>=0,'PATH_DECREASE','Path cannot decline inside a proof epoch');
+          const key=event.date.slice(0,4)+'-Q'+Math.ceil(+event.date.slice(5,7)/3);require(key!==this.lastQuarterKey,'DUPLICATE_QUARTER','Cannot recompute a second allowance in the same calendar quarter');require([1,4,7,10].includes(+event.date.slice(5,7))&&event.date.endsWith('-01'),'QUARTER_START_DATE','This implementation uses the first calendar day as its declared computation-date convention');if(this.lastQuarterKey){const [y,k]=this.lastQuarterKey.split('-Q').map(Number);const expected=k===4?`${y+1}-Q1`:`${y}-Q${k+1}`;require(key===expected,'SKIPPED_QUARTER','Quarterly measurements cannot be skipped');}this.lastQuarterKey=key;const maxTarget=this.path.mul(String(Math.pow(1.04,.25)));require(target.cmp(maxTarget)<=0||Math.abs(target.number()-maxTarget.number())<1e-10,'PATH_GROWTH_LIMIT','Quarterly target exceeds the 4% annualized upper bound');const priorR=this.R();this.path=target;this.quarter={id:event.quarter??event.date,priorR,allowance:target.sub(priorR).max(0),issued:q(0),netIncome:q(0),remitted:q(0),remittanceBudget:target.sub(priorR).max(0).min(this.lastNetIncome.max(0)),end:lastBusinessDay(quarterEnd(event.date),this.holidays),start:event.date,issuanceMonths:[]};
+          if(this.exposure().cmp(this.cap())>0){if(this.previousCap!==null&&this.previousCapRate===(this.emergency?POLICY.emergencyFacilityCap:POLICY.ordinaryFacilityCap)&&this.exposure().cmp(this.previousCap)<=0)this.note('PASS','DENOMINATOR_OVERHANG','Prior-quarter money-stock decline leaves grandfathered exposure; new lending is frozen');else this.note('POLICY_UNDEFINED','UNCLASSIFIED_CAP_OVERHANG','Opening exposure exceeds cap without an established denominator-only cause');}
+          detail={allowance:this.quarter.allowance.toString()};break;
+        }
+        case 'issue': {
+          needQuarter();require(this.date<=this.quarter.end,'QUARTER_EXPIRED','Cannot issue beyond active quarter');require(this.quarter.issued.add(amount).cmp(this.quarter.allowance)<=0,'ISSUANCE_ALLOWANCE','All Treasury credits including remittances share one quarterly allowance');
+          const remittance=q(event.remittance??0);require(remittance.cmp(0)>=0&&remittance.cmp(amount)<=0,'REMITTANCE_AMOUNT','Remittance is a nonnegative component of issuance, not an additional payment');
+          require(remittance.eq(amount.min(this.quarter.remittanceBudget.sub(this.quarter.remitted))),'REMITTANCE_FIRST','Prior-quarter net income must be remitted first, within the same issuance allowance');this.quarter.remitted=this.quarter.remitted.add(remittance);useJournal('issue');this.quarter.issued=this.quarter.issued.add(amount);if(amount.cmp(0)>0&&!this.quarter.issuanceMonths.includes(this.date.slice(0,7)))this.quarter.issuanceMonths.push(this.date.slice(0,7));detail={remittance:remittance.toString(),grant:amount.sub(remittance).toString()};break;
+        }
+        case 'spend': case 'redeemDebt':useJournal(event.type);this.dischargeObligations(amount);break;
+        case 'tax': case 'borrow':case 'redeemInvestment':case 'collectInterest':case 'payInterest':useJournal(event.type);break;
+        case 'collectPrincipal':require(amount.cmp(get(this.accounts,'Bank','loans').add(get(this.accounts,'Bank','loanAllowance')))<=0,'IMPAIRED_BANK_RECOVERY','Cash recovery beyond unimpaired loan carrying value requires an explicit allowance release event','POLICY_UNDEFINED');useJournal('collectPrincipal');break;
+        case 'repayConversion':require(amount.cmp(get(this.accounts,'Authority','conversion').add(get(this.accounts,'Authority','conversionAllowance')))<=0,'IMPAIRED_CONVERSION_RECOVERY','Cash recovery of impaired conversion claims needs an explicit allowance release event','POLICY_UNDEFINED');useJournal('repayConversion');break;
+        case 'draw': {
+          needQuarter();require(this.date<=this.quarter.end,'QUARTER_EXPIRED','Begin next quarter before new lending');require(!this.loans[event.loanId],'LOAN_ID','Unique loan ID required');require(typeof event.loanId==='string'&&event.loanId,'LOAN_ID','Loan ID required');
+          require(amount.cmp(this.cap().sub(this.exposure()).max(0))<=0,'FACILITY_HEADROOM','New lending cannot exceed available cap headroom');
+          require(event.eligibleCollateralAttested===true&&event.stressTriggerAttested===true&&event.penaltyRateAttested===true,'FACILITY_ELIGIBILITY','Collateral, stress trigger and penalty-rate attestations required; these inputs are not independently verified','POLICY_UNDEFINED');
+          const days=dayNumber(event.maturity)-dayNumber(this.date);require(days>0&&days<=POLICY.facilityMaximumContractDays,'FACILITY_TERM','Loan maturity must be within 90 calendar days');
+          useJournal('draw');this.loans[event.loanId]={principal:amount,maturity:event.maturity,origin:this.date};break;
+        }
+        case 'repayFacility': {
+          const loan=this.loans[event.loanId];require(loan&&loan.principal.cmp(amount)>=0,'FACILITY_PRINCIPAL','Repayment exceeds identified unpaid principal');
+          require(get(this.accounts,'Authority','facilityAllowance').eq(0),'IMPAIRED_FACILITY_RECOVERY','Recovery after impairment requires an explicit allowance allocation policy','POLICY_UNDEFINED');
+          useJournal('repayFacility');loan.principal=loan.principal.sub(amount);break;
+        }
+        case 'impairFacility':require(amount.cmp(this.P().add(get(this.accounts,'Authority','facilityAllowance')))<=0,'IMPAIRMENT_AMOUNT','Impairment exceeds remaining carrying value');useJournal(event.type);break;
+        case 'impairConversion':require(amount.cmp(get(this.accounts,'Authority','conversion').add(get(this.accounts,'Authority','conversionAllowance')))<=0,'IMPAIRMENT_AMOUNT','Impairment exceeds carrying value');useJournal(event.type);break;
+        case 'impairBankLoan':require(amount.cmp(get(this.accounts,'Bank','loans').add(get(this.accounts,'Bank','loanAllowance')))<=0,'IMPAIRMENT_AMOUNT','Impairment exceeds carrying value');useJournal(event.type);break;
+        case 'discharge': {
+          const loan=this.loans[event.loanId];require(loan&&loan.principal.cmp(amount)>=0,'FACILITY_PRINCIPAL','Legal discharge exceeds identified unpaid principal');require(event.finalLegalResolution===true,'LEGAL_RESOLUTION','Impairment or contractual maturity alone is not final legal resolution');
+          const release=amount.min(get(this.accounts,'Authority','facilityAllowance').neg());entries=journals.discharge(amount,release);post(this.accounts,entries);loan.principal=loan.principal.sub(amount);this.U=this.U.add(amount);break;
+        }
+        case 'auction': {
+          needQuarter();require(event.convention==='par-principal-coupon','AUCTION_ACCOUNTING_CONVENTION','Discount-price versus face-value mechanics are not specified; use the explicitly synthetic at-par convention or mark undefined','POLICY_UNDEFINED');
+          require(typeof event.billId==='string'&&!this.bills[event.billId],'BILL_ID','Unique bill ID required');const days=dayNumber(event.maturity)-dayNumber(this.date);require(days>0&&event.maturity<=String(+this.date.slice(0,4)+1)+this.date.slice(4),'BILL_TERM','Bills must mature within one year');
+          detail=clearAuction(amount,event.bids??[]);
+          // No partial settlement policy is prescribed. Reject the entire operation rather than fabricate proceeds.
+          require(detail.cleared,'AUCTION_NON_CLEARANCE','Bids do not fill the requested quantity; partial settlement and floor response are undefined','POLICY_UNDEFINED');
+          useJournal('sale',q(detail.filled));this.bills[event.billId]={principal:q(detail.filled),maturity:event.maturity,rate:detail.uniformRate};
+          if(detail.uniformRate>.08)this.note('FAIL','BILL_RATE_KILL_CRITERION','Supplied clearing rate exceeds the design 8% threshold; this is an input scenario, not a predicted rate');break;
+        }
+        case 'maturity': {const b=this.bills[event.billId];require(b&&b.principal.cmp(amount)>=0,'BILL_PRINCIPAL','Maturity exceeds identified bill principal');require(b.maturity===null||this.date>=b.maturity,'EARLY_MATURITY','Cannot redeem before contractual maturity');useJournal('maturity');b.principal=b.principal.sub(amount);break;}
+        case 'emergency_start':require(!this.emergency,'EMERGENCY_ACTIVE','Emergency already active');require(event.jointCertification===true,'EMERGENCY_CERTIFICATION','Joint certification required');this.emergency={origin:this.date,expiry:addDays(this.date,POLICY.emergencyInitialDays)};break;
+        case 'emergency_extend':require(this.emergency&&event.recordedCongressionalVote===true,'EMERGENCY_EXTENSION','Active emergency and recorded extension required');require(dayNumber(event.expiry)>dayNumber(this.emergency.expiry)&&dayNumber(event.expiry)-dayNumber(this.emergency.origin)<=POLICY.emergencyMaximumDays,'EMERGENCY_HARD_STOP','Extension cannot exceed 365 days from original start');this.emergency.expiry=event.expiry;break;
+        case 'statutory_rebase':require(!this.quarter,'MIDQUARTER_REBASE','Remaining issuance allowance following midquarter rebase is unspecified','POLICY_UNDEFINED');require(event.statuteAttested===true,'REBASE_AUTHORITY','Explicit statutory authorization required');this.epochChanges.push({date:this.date,oldPath:this.path.toString(),newPath:this.R().toString(),resetResidual:this.U.toString()});this.path=this.R();this.U=q(0);this.epoch++;break;
+        case 'end_quarter': {
+          needQuarter();require(this.date===this.quarter.end,'QUARTER_END_DATE','Close on the configured last business day');
+          if(!this.quarter.issued.eq(this.quarter.allowance))this.note('FAIL','UNPAID_ALLOWANCE','Quarter ended without crediting the full prescribed allowance');
+          if(this.quarter.allowance.cmp(0)>0&&this.quarter.issuanceMonths.length!==3)this.note('FAIL','MONTHLY_TRANCHES','Positive quarterly allowance was not paid over three distinct monthly tranches');
+          const excess=get(this.accounts,'Authority','T').sub(this.R().mul(POLICY.treasuryQuarterEndRatio)).max(0);
+          if(excess.cmp(0)>0){this.cashObligations.push({remaining:excess,deadline:lastBusinessDay(nextQuarterEnd(this.date),this.holidays),failed:false});this.note('POLICY_UNDEFINED','QUARTER_CASH_BREACH_WITH_CURE','Quarter-end 1% threshold breached; source provides a cure deadline but does not classify interim compliance',{excess:excess.toString()});}
+          this.previousCap=this.cap();this.previousCapRate=this.emergency?POLICY.emergencyFacilityCap:POLICY.ordinaryFacilityCap;this.lastNetIncome=this.quarter.netIncome;this.quarter=null;break;
+        }
+        case 'close_day':this.closeDay();break;
+        case 'observe':break;
+        default:throw new Rejection('UNSUPPORTED_EVENT','Event is outside the implemented accounting perimeter','POLICY_UNDEFINED');
+      }
+      if(this.quarter&&event.type==='payInterest')this.quarter.netIncome=this.quarter.netIncome.add(amount);if(this.quarter&&['impairFacility','impairConversion'].includes(event.type))this.quarter.netIncome=this.quarter.netIncome.sub(amount);if(this.quarter&&event.type==='discharge'){const loss=entries.find(x=>x[0]==='Authority'&&x[1]==='equity');this.quarter.netIncome=this.quarter.netIncome.add(loss[2]);}this.assertInvariants();applied=true;
+      const expectedDelta=['issue','draw'].includes(event.type)?amount:['repayFacility','repayConversion','payInterest'].includes(event.type)?amount.neg():q(0);
+      require(this.R().sub(q(before.R)).eq(expectedDelta),'R_FLOW_IDENTITY','Unexpected change in rule money');this.ids.add(event.id);
+    }catch(error){this.restore(c);const status=error instanceof Rejection?error.status:'FAIL';this.note(status,error.code??'LEDGER_PRECONDITION',error.message,{eventId:event.id});applied=false;entries=[];}
+    const issues=this.issues.slice(startIssue),result={event:structuredClone(event),status:worst(issues),applied,issues,entries:entries.map(([s,a,d])=>[s,a,q(d).toString()]),before,after:this.snapshot(),detail};this.history.push(result);return result;
+  }
+  report(){return{schemaVersion:1,policyVersion:POLICY.version,status:worst(this.issues),events:this.history.length,applied:this.history.filter(x=>x.applied).length,issues:this.issues,snapshot:this.snapshot(),daily:this.daily,epochChanges:this.epochChanges,scope:'Synthetic accounting only; not economics, legal validation, access resilience or a national conversion estimate'};}
+}

@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {annualScenario} from '../src/scenarios.mjs';
+import {stressPath} from '../src/stress.mjs';
+import {Engine} from '../src/engine.mjs';
+import {customOpening} from '../src/ledger.mjs';
+import {minimizeTrace,hasIssue} from '../src/counterexample.mjs';
+const root=path.dirname(path.dirname(fileURLToPath(import.meta.url))),out=path.join(root,'reports');fs.mkdirSync(out,{recursive:true});
+const write=(name,data)=>fs.writeFileSync(path.join(out,name),JSON.stringify(data,null,2)+'\n');
+const annual=[];for(const m of [.2,.4,.7])for(const s of ['normal','brake','facility_loss']){const result=annualScenario(m,s);annual.push({migration:m,scenario:s,status:result.report.status,closing:result.report.snapshot,annual:result.annual});write(`annual-${m}-${s}.json`,result);}
+const generated=[];for(const seed of [1,7,42,99,1234,98765,20261030,0x70072026])generated.push(stressPath(seed));generated.push(stressPath(250025,{years:25}));write('generated-paths.json',generated);
+const events=[{id:'start',date:'2027-01-01',type:'begin_quarter',path:'191'},{id:'tax',date:'2027-01-01',type:'tax',amount:1},{id:'spend',date:'2027-01-01',type:'spend',amount:1},{id:'overissue',date:'2027-01-01',type:'issue',amount:3}];
+write('minimized-rejected-overissuance.json',{description:'Expected rejection of an invalid attempted operation, not a successful exploit or a macroeconomic counterexample',originalLength:events.length,events:minimizeTrace(events,x=>hasIssue(x,'ISSUANCE_ALLOWANCE')),guarantee:'1-minimal under this deterministic predicate, not globally shortest'});
+const e=new Engine({opening:customOpening({M:99,T:1})});for(const x of [{id:'q',type:'begin_quarter',path:'100'},{id:'em',type:'emergency_start',jointCertification:true},{id:'d',type:'draw',amount:5,loanId:'l',maturity:'2027-03-31',eligibleCollateralAttested:true,stressTriggerAttested:true,penaltyRateAttested:true},{id:'r',type:'repayFacility',amount:1,loanId:'l'},{id:'l',type:'discharge',amount:4,loanId:'l',finalLegalResolution:true}])e.execute({date:'2027-01-01',...x});e.execute({id:'eq',date:'2027-03-31',type:'end_quarter'});e.execute({id:'nq',date:'2027-04-01',type:'begin_quarter',path:100});write('emergency-expiry-policy-undefined.json',{report:e.report(),history:e.history});
+const summary={formatVersion:1,accountingExamples:annual,generatedPathCount:generated.length,generatedYears:generated.reduce((a,x)=>a+x.years,0),generatedEvents:generated.reduce((a,x)=>a+x.eventCount,0),generatedStatus:generated.every(x=>x.status==='PASS')?'PASS':'FAIL',policyCompleteness:'POLICY_UNDEFINED',economicValidation:'NOT_RUN',holdoutStatus:'NOT_YET_RUN',explicitUndefinedExample:e.report().status,sourcePolicy:'0.7.1 translated accounting subset',warning:'A passing harness means documented checks behaved as expected, including expected rejections and undefined results. It does not mean the monetary proposal passed economic or complete operational validation.'};
+write('summary.json',summary);
+const hashes={};for(const f of fs.readdirSync(out).sort())if(f!=='sha256.json')hashes[f]=createHash('sha256').update(fs.readFileSync(path.join(out,f))).digest('hex');write('sha256.json',hashes);
+console.log(JSON.stringify({annualCases:annual.length,generatedPaths:generated.length,generatedYears:summary.generatedYears,generatedEvents:summary.generatedEvents,generatedStatus:summary.generatedStatus,policyCompleteness:summary.policyCompleteness,economicValidation:summary.economicValidation,output:'reports/'},null,2));
+if(summary.generatedStatus==='FAIL'||annual.some(x=>x.status==='FAIL'))process.exitCode=1;

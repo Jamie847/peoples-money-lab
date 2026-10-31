@@ -1,0 +1,14 @@
+{
+  "name": "peoples-money-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Conditional accounting diagnostics for a proposed public-money design; not an economic forecast",
+  "engines": {"node": ">=20"},
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "reproduce": "node scripts/reproduce.mjs",
+    "check": "npm test && npm run reproduce"
+  },
+  "license": "MIT"
+}

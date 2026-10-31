@@ -1,0 +1,10 @@
+{
+  "description": "Synthetic 100 -> 102 -> 101 followed by legal discharge; money remains and U records the loss",
+  "opening": {"M": "99", "T": "1", "B": "0"},
+  "events": [
+    {"id": "quarter", "date": "2027-01-01", "type": "begin_quarter", "path": "100"},
+    {"id": "draw", "date": "2027-01-01", "type": "draw", "amount": "2", "loanId": "example", "maturity": "2027-03-31", "eligibleCollateralAttested": true, "stressTriggerAttested": true, "penaltyRateAttested": true},
+    {"id": "repay", "date": "2027-01-02", "type": "repayFacility", "amount": "1", "loanId": "example"},
+    {"id": "resolve", "date": "2027-01-03", "type": "discharge", "amount": "1", "loanId": "example", "finalLegalResolution": true}
+  ]
+}
