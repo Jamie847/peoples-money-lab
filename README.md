@@ -4,6 +4,8 @@ A small, inspectable accounting laboratory for a proposed public-money design. I
 
 **Current status: research prototype. Some operating policies remain undefined.** A green test run means the software reproduced expected accounting results and detected specified invalid or undefined operations. It is not a green light for the monetary proposal.
 
+The draft 0.7.2 branch adds an opt-in operating-rule engine. Its [48 visible acceptance cases](acceptance/0.7.2/SPECIFICATION.md) were frozen before implementation. [Implementation progress and remaining limits](docs/operating-0.7.2-progress.md) distinguish working components from pending policy decisions and unfinished coverage. The implementation is **not frozen**, and these visible cases are not held-out evidence. The commands and historical results below continue to describe the 0.7.1 engine unless explicitly labeled otherwise.
+
 ## Run it
 
 Requires Node.js 20 or newer. There are no third-party runtime dependencies and no API keys, services, package downloads, workbook programs, or network calls.

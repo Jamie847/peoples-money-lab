@@ -1,0 +1,15 @@
+{
+  "version": "0.7.2-operating-rules.work-in-progress.1",
+  "auctionMaximumRate": "0.06",
+  "shortAuctionsForDirectWindow": 2,
+  "shortAuctionsForReview": 3,
+  "cashRollingBusinessDays": 60,
+  "cashMaximumRollingBreaches": 10,
+  "cashRemedyBusinessDays": 5,
+  "overhangEscalationQuarters": 8,
+  "publicRegisterIntervalDays": 7,
+  "recoveryPenaltyClassification": "POLICY_UNDEFINED",
+  "recoveryOverpaymentDisposition": "POLICY_UNDEFINED",
+  "overlappingDirectSaleAuthorization": "POLICY_UNDEFINED",
+  "status": "INCOMPLETE_NOT_FROZEN"
+}

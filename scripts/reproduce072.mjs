@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {OperatingEngine} from '../src/engine072.mjs';
+import {customOpening} from '../src/ledger.mjs';
+const root=path.dirname(path.dirname(fileURLToPath(import.meta.url))),out=path.join(root,'reports-072');fs.mkdirSync(out,{recursive:true});
+const write=(name,x)=>fs.writeFileSync(path.join(out,name),JSON.stringify(x,null,2)+'\n');
+const run=(name,opening,events)=>{const e=new OperatingEngine({opening:customOpening(opening)});for(const [i,event]of events.entries()){const r=e.execute({id:`${name}-${i}`,date:'2027-01-01',...event});if(!r.applied)throw Error(JSON.stringify(r.issues));}write(name+'.json',{report:e.report(),history:e.history});return e;};
+run('residual-recovery',{M:103,T:1,U:4,bankMoney:4,path:100},[{type:'begin_quarter',path:100,verifiedTarget:true},{type:'recover',loanId:'opening-residual',receiptId:'synthetic-1',settled:true,amount:1}]);
+run('auction-shortfall',{M:99,T:1},[{type:'begin_quarter',path:100,verifiedTarget:true},{type:'auction',auctionId:'synthetic-a',amount:10,bids:[{amount:10,rate:'.05'}],maturity:'2027-03-01',convention:'par-principal-coupon'},{type:'settle_auction',auctionId:'synthetic-a',bid:0,amount:6},{type:'close_auction',auctionId:'synthetic-a'}]);
+run('cash-remedy',{M:96,T:4},[{type:'begin_quarter',path:100,verifiedTarget:true},{type:'observe',date:'2027-01-12'},{type:'dividend',date:'2027-01-19'},{type:'close_day',date:'2027-01-19'}]);
+const summary={implementation:'WORK_IN_PROGRESS_NOT_FROZEN',examples:3,acceptance48:'NOT_COMPLETE',heldOutChallenge:'NOT_RUN',unresolved:['penalty and recovery-excess disposition','overlapping direct-sale authorization'],warning:'Examples are partial traces; successful reproduction is not full policy acceptance or economic validation.'};write('summary.json',summary);console.log(JSON.stringify(summary,null,2));

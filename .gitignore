@@ -3,5 +3,6 @@ node_modules/
 .env*
 coverage/
 reports/
+reports-072/
 *.xlsx
 *.zip
