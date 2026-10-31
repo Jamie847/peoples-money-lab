@@ -1,5 +1,5 @@
 {
-  "version": "0.7.2-operating-rules.work-in-progress.1",
+  "version": "0.7.2-operating-rules.work-in-progress.2",
   "auctionMaximumRate": "0.06",
   "shortAuctionsForDirectWindow": 2,
   "shortAuctionsForReview": 3,

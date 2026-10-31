@@ -1,6 +1,8 @@
 {
-  "version": "OPM-2027-observed-2026-10-31",
+  "version": "OPM-2027-through-2029-observed-2026-10-31",
   "source": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/#url=2027",
-  "scope": "Monday-Friday federal schedule, published observed holidays falling in calendar 2027; no prediction of later emergency closures",
-  "holidays": ["2027-01-01", "2027-01-18", "2027-02-15", "2027-05-31", "2027-06-18", "2027-07-05", "2027-09-06", "2027-10-11", "2027-11-11", "2027-11-25", "2027-12-24", "2027-12-31"]
+  "scope": "Monday-Friday nationwide federal observed dates in calendar 2027-2029, excluding DC-only Inauguration Day; no prediction of later emergency closures",
+  "coverageStart": "2027-01-01",
+  "coverageEnd": "2029-12-31",
+  "holidays": ["2027-01-01", "2027-01-18", "2027-02-15", "2027-05-31", "2027-06-18", "2027-07-05", "2027-09-06", "2027-10-11", "2027-11-11", "2027-11-25", "2027-12-24", "2027-12-31", "2028-01-17", "2028-02-21", "2028-05-29", "2028-06-19", "2028-07-04", "2028-09-04", "2028-10-09", "2028-11-10", "2028-11-23", "2028-12-25", "2029-01-01", "2029-01-15", "2029-02-19", "2029-05-28", "2029-06-19", "2029-07-04", "2029-09-03", "2029-10-08", "2029-11-12", "2029-11-22", "2029-12-25"]
 }
