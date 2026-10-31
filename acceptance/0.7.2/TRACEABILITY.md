@@ -45,7 +45,7 @@ Work in progress; not an implementation freeze or held-out evaluation. PASS is l
 | A39 | PASS | GDP annual revision gate, delayed releases, independent price availability and public vintage records. Tests: `A39 GDP`, `A39 independent`, `A39 integrated` |
 | A40 | PASS | Active brake target persists; failed replacements and maturities affect actual B. Tests: `A40 active` |
 | A41 | PASS | Complete clean calendar quarter enables new episode. Tests: `A41-A43:` |
-| A42 | NOT_IMPLEMENTED | Unsupported rollover/relabel requests are rejected and tags retained, but permitted rollover/relabel lifecycle is not implemented. Tests: `A42 loan` |
+| A42 | PASS | Adversarial rollover/relabel requests are rejected atomically; financial state and persistent lineage stay unchanged, quarter remains disqualified, recertification retains the original clock and its hard stop. No actual contractual renewal is admitted. Tests: `A42 loan` |
 | A43 | PASS | No clean quarter retains original clock; exhausted authority rejected. Tests: `A41-A43:` |
 | A44 | PASS | Partial overdue repayment reduces balance without resetting age. Tests: `A44 overdue` |
 | A45 | PASS | Discharged residual and recovery reconcile without overdue-principal double count. Tests: `A45 discharged` |
@@ -53,6 +53,6 @@ Work in progress; not an implementation freeze or held-out evaluation. PASS is l
 | A47 | PASS | Cash recovery reported separately from denominator room restoration. Tests: `A47 weekly`, `A03 denominator`, `A44-A47:` |
 | A48 | PASS | Fixed scheduled payments continue after missing data; no additional allowance. Tests: `A48 scheduled` |
 
-Counts: PASS 45; POLICY_UNDEFINED 2; NOT_IMPLEMENTED 1.
+Counts: PASS 46; POLICY_UNDEFINED 2.
 
 Regenerate with `npm run acceptance:072`. Machine-readable results are generated in `reports-072/acceptance-results.json`. The frozen SPECIFICATION.md and its hash are unchanged.

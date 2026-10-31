@@ -335,11 +335,11 @@
     },
     {
       "id": "A42",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PASS",
       "tests": [
         "A42 loan"
       ],
-      "note": "Unsupported rollover/relabel requests are rejected and tags retained, but permitted rollover/relabel lifecycle is not implemented."
+      "note": "Adversarial rollover/relabel requests are rejected atomically; financial state and persistent lineage stay unchanged, quarter remains disqualified, recertification retains the original clock and its hard stop. No actual contractual renewal is admitted."
     },
     {
       "id": "A43",

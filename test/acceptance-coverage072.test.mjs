@@ -30,8 +30,20 @@ test('A40 active missing-data brake retains B target while failed replacement an
 });
 test('A42 loan relabeling or rollover cannot erase its emergency identity; one bad day invalidates quarter',()=>{
   const e=new OperatingEngine({opening:customOpening({M:99,T:1})});begin(e);ok(ev(e,'emergency_start',{jointCertification:true}));ok(draw(e,'tagged',1,'2027-03-01'));
-  for(const type of ['relabel_loan','roll_loan'])assert.equal(ev(e,type,{loanId:'tagged',newLoanId:'fresh',maturity:'2027-06-01'}).applied,false);
+  for(const type of ['relabel_loan','roll_loan']){
+    const before=e.snapshot(),register=e.publicRegister(),operating=structuredClone(e.operating),clock=structuredClone(e.emergency),ids=[...e.ids];
+    const result=ev(e,type,{date:'2027-02-01',loanId:'tagged',newLoanId:'fresh',maturity:'2027-06-01'});
+    assert.equal(result.applied,false);assert.equal(result.status,'POLICY_UNDEFINED');assert.ok(result.issues.some(x=>x.code==='UNSUPPORTED_EVENT'));assert.deepEqual(result.entries,[]);
+    assert.deepEqual(e.snapshot(),before);assert.deepEqual(e.publicRegister(),register);assert.deepEqual(e.operating,operating);assert.deepEqual(e.emergency,clock);assert.deepEqual([...e.ids],ids);assert.equal(e.loans.fresh,undefined);
+  }
   assert.equal(e.operating.loans.tagged.episode,'2027-01-01');close(e);assert.equal(e.operating.cleanQuarters.length,0);
+  begin(e,'2027-04-01');ok(ev(e,'emergency_start',{jointCertification:true}));assert.equal(e.emergency.origin,'2027-01-01');assert.equal(e.emergency.continued,true);
+  // Continue the complete quarterly record without repaying or replacing the
+  // tagged balance. A new name cannot supply the missing clean quarter.
+  close(e);begin(e,'2027-07-01');close(e);begin(e,'2027-10-01');close(e);begin(e,'2028-01-01');
+  const beforeStop=e.snapshot(),episodes=structuredClone(e.emergencyEpisodes),register=e.publicRegister();
+  const exhausted=ev(e,'emergency_start',{jointCertification:true});assert.equal(exhausted.applied,false);assert.ok(exhausted.issues.some(x=>x.code==='EMERGENCY_HARD_STOP'));assert.deepEqual(e.snapshot(),beforeStop);assert.deepEqual(e.emergencyEpisodes,episodes);assert.deepEqual(e.publicRegister(),register);assert.equal(e.operating.cleanQuarters.length,0);assert.equal(e.operating.loans.tagged.episode,'2027-01-01');
+  assert.ok(e.report().publications.filter(x=>x.kind==='weekly-register').some(x=>x.loans.some(l=>l.loanId==='tagged'&&l.episode==='2027-01-01'&&l.principal==='1')));
   const f=new OperatingEngine({opening:customOpening({M:99,T:1})});begin(f);ok(ev(f,'emergency_start',{jointCertification:true}));ok(draw(f,'temporary',3,'2027-03-01'));ok(ev(f,'recover',{loanId:'temporary',receiptId:'same-day',amount:3,settled:true}));close(f);assert.equal(f.operating.cleanQuarters.length,0);
 });
 test('A44 overdue partial principal repayment retains age and reports remaining legal balance',()=>{
