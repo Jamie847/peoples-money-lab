@@ -14,10 +14,14 @@ npm run reproduce
 # Or both:
 npm run check
 # Inspect an individual editable synthetic event file:
-node scripts/run.mjs fixtures/simple-loss.json
+node scripts/run.mjs fixtures/simple-loss.json # partial example: exits 3 (POLICY_UNDEFINED)
 ```
 
+The individual-file CLI uses exit 0 for PASS, 1 for FAIL, and 3 for POLICY_UNDEFINED. A partial trace is not a complete quarterly schedule: the simple-loss fixture demonstrates the accounting, but intentionally leaves its quarter open. Supply `"finalize": true` (or `{"date":"YYYY-MM-DD"}`) in a scenario to close its endpoint day; this does not silently finish unpaid monthly tranches or missing quarters.
+
 The reproduction command writes machine-readable examples, daily observations, transaction journals, generated-path summaries, and a minimized rejected transaction sequence into `reports/`. That directory is generated, not committed. No real person's transactions or live national datasets are included.
+
+Versioned numeric policy parameters are centralized in `config/policy-0.7.1.json`. Supported edits drive both helpers and engine checks. Unknown fields, invented operational responses, and unsupported calendar/target variants are rejected; changing a parameter is a modeling variant, not a finding about the published proposal.
 
 ## What the numbers mean
 
@@ -59,9 +63,13 @@ This is not a banking platform, central-bank ledger, monetary-policy recommendat
 
 A one-day time step is not intraday settlement. Several features are conservative implementation boundaries rather than resolved policy: see the methods and gaps. The private book manuscript is not included or licensed by this repository. Source-policy provisions are summarized only as needed to explain the new code.
 
+## Recorded independent first pass
+
+The frozen baseline evaluation found **9 fully passed cases, 6 policy-undefined cases, and 3 unimplemented cases**. No accounting failure was demonstrated; this is not “18 passed.” Full first-pass evidence and separate post-audit repairs are described in [evaluation](docs/evaluation.md).
+
 ## Reproducibility and review
 
-This code and its tests were developed with AI assistance. Earlier checks were also AI-assisted. They are not an independent professional audit. Human review in monetary economics, banking operations and law remains necessary. A separate held-out assessment should be run against a frozen commit, with failures published before any repairs; see [`docs/evaluation.md`](docs/evaluation.md).
+This code and its tests were developed with AI assistance. Earlier checks were also AI-assisted. They are not an independent professional audit. Human review in monetary economics, banking operations and law remains necessary. The original independently authored assessment was run against a frozen commit and is preserved before repairs; see [`docs/evaluation.md`](docs/evaluation.md).
 
 The project is intended to accompany a book and future educational website. Publication of a repository does not establish the validity of the proposal. Contributions that identify counterexamples, missing assumptions or mistaken accounting are particularly useful.
 

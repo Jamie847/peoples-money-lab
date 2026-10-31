@@ -1,18 +1,21 @@
+import {POLICY,validatePolicy} from './policy.mjs';
 import {q} from './rational.mjs';
 /** All data here are supplied observations, not fetched, forecasts, or economic predictions. */
-export function issuanceRule({previousPath,previousR,trendRealGrowth,cpiRebased,pceRebased,targetPrice=100,inflationTarget=0,lambda=.5}){
+export function issuanceRule({previousPath,previousR,trendRealGrowth,cpiRebased,pceRebased,targetPrice=100,inflationTarget=0,lambda,policy=POLICY}){
+  policy=validatePolicy(policy);lambda??=Number(policy.priceFeedbackLambda);
   for(const v of [trendRealGrowth,cpiRebased,pceRebased,targetPrice,inflationTarget,lambda])if(!Number.isFinite(v))throw Error('Finite observed inputs required');
   if(cpiRebased<=0||pceRebased<=0||targetPrice<=0||lambda<0)throw Error('Invalid rule input');
-  if(![0,.02].includes(inflationTarget))throw Error('Only documented 0% or 2% target variants');
-  const gap=Math.log(((cpiRebased+pceRebased)/2)/targetPrice),growth=Math.max(0,Math.min(.04,trendRealGrowth+inflationTarget-lambda*gap));
-  const target=q(previousPath).mul(String(Math.pow(1+growth,.25)));
+  if(!policy.supportedInflationTargets.includes(inflationTarget))throw Error('Only documented 0% or 2% target variants');
+  const gap=Math.log(((cpiRebased+pceRebased)/2)/targetPrice),growth=Math.max(Number(policy.annualPathGrowthMinimum),Math.min(Number(policy.annualPathGrowthMaximum),trendRealGrowth+inflationTarget-lambda*gap));
+  const target=q(previousPath).mul(String(Math.pow(1+growth,1/policy.quartersPerYear)));
   return {gap,annualGrowth:growth,path:target.toString(),allowance:target.sub(previousR).max(0).toString(),arithmetic:'binary64 transcendental calculation converted to exact decimal rational'};
 }
-export function brakeRule({priorR,priorM,currentLogGap,previousLogGap,wasActive=false}){
+export function brakeRule({priorR,priorM,currentLogGap,previousLogGap,wasActive=false,policy=POLICY}){
+  policy=validatePolicy(policy);
   if(!Number.isFinite(currentLogGap)||!Number.isFinite(previousLogGap))throw Error('Finite observed gaps required');
-  const active=wasActive?currentLogGap>.01:currentLogGap>.03&&previousLogGap>.03;
-  const floor=q(priorR).mul('.01'),brake=active?q(priorM).mul(String(Math.min(.5*currentLogGap,.03))):q(0);
-  return {active,floor:floor.toString(),brake:brake.toString(),targetStock:floor.add(brake).toString(),roll:active&&currentLogGap>.01};
+  const active=wasActive?currentLogGap>Number(policy.brakeReleaseLogGap):currentLogGap>Number(policy.brakeTriggerLogGap)&&previousLogGap>Number(policy.brakeTriggerLogGap);
+  const floor=q(priorR).mul(policy.safeAssetFloorRatio),brake=active?q(priorM).mul(String(Math.min(Number(policy.brakeLambda)*currentLogGap,Number(policy.brakeMaximumRatio)))):q(0);
+  return {active,floor:floor.toString(),brake:brake.toString(),targetStock:floor.add(brake).toString(),roll:active&&currentLogGap>Number(policy.brakeReleaseLogGap)};
 }
 /** At-par principal convention with coupon-rate bids: not a discount-bill market model. */
 export function clearAuction(quantity,bids){

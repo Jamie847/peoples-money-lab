@@ -1,0 +1,179 @@
+{
+  "baselineCommit": "97e43c9a82b09b42426b1760d0b558d91b6f32f2",
+  "specificationSha256": "0eea163f953986126ad1f4244d05b4cc23ce66dbb76430aba38b531db111c2ee",
+  "evaluatedAt": "2026-10-31T02:48:37.009Z",
+  "cases": 18,
+  "assertions": 9229,
+  "counts": {
+    "PASS": 9,
+    "FAIL": 0,
+    "POLICY_UNDEFINED": 6,
+    "UNIMPLEMENTED": 3
+  },
+  "independentAudit": "Every event before/after snapshot checked by separate BigInt rational balance-sheet, counterpart, ownership, exposure and flow checker",
+  "scope": "Frozen 18-case specification, not economic validation; rejected invalid events can be successful tests. Policy gaps and unimplemented paths are not complete passes.",
+  "results": [
+    {
+      "id": "H01",
+      "name": "Cash threshold and fifth versus sixth business-day close",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 757,
+      "notes": []
+    },
+    {
+      "id": "H02",
+      "name": "Business-day streak crosses quarter boundary",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 414,
+      "notes": [
+        "Separate quarter-end cash breach correctly remains POLICY_UNDEFINED while the six-day violation is FAIL."
+      ]
+    },
+    {
+      "id": "H03",
+      "name": "Denominator fall starts cash breach",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 265,
+      "notes": []
+    },
+    {
+      "id": "H04",
+      "name": "Quarter-end excess and subsequent cure",
+      "classification": "POLICY_UNDEFINED",
+      "scope": "source policy gap correctly exposed",
+      "assertions": 903,
+      "notes": [
+        "Engine discloses frozen excess and FIFO disbursement convention. Correctly detects missed cure rather than treating grace interval as clean compliance."
+      ]
+    },
+    {
+      "id": "H05",
+      "name": "Repeated four-day breaches with daily reset",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 789,
+      "notes": [
+        "Literal consecutive-day rule permits recurrent breaches. This is a policy limitation, not a failed implementation."
+      ]
+    },
+    {
+      "id": "H06",
+      "name": "Current drains cannot enlarge fixed allowance",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 716,
+      "notes": []
+    },
+    {
+      "id": "H07",
+      "name": "Zero allowance blocks remittance",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 189,
+      "notes": []
+    },
+    {
+      "id": "H08",
+      "name": "Grandfathered denominator and exact headroom",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 869,
+      "notes": [
+        "Trace also records the incidental 0.01 quarter-end Treasury excess as an unresolved cure-status issue; this does not change facility expectations."
+      ]
+    },
+    {
+      "id": "H09",
+      "name": "Emergency expiry exposes cap gap",
+      "classification": "POLICY_UNDEFINED",
+      "scope": "source policy gap correctly exposed",
+      "assertions": 643,
+      "notes": []
+    },
+    {
+      "id": "H10",
+      "name": "Impairment recovery and discharge",
+      "classification": "UNIMPLEMENTED",
+      "scope": "disclosed aggregate-loan representation limitation",
+      "assertions": 573,
+      "notes": [
+        "Frozen recovery-then-discharge sequence cannot run. The alternative full-discharge branch verifies allowance release and no double impairment, but does not substitute for missing collateral-sale and impaired-cash-recovery support."
+      ]
+    },
+    {
+      "id": "H11",
+      "name": "Maturity does not repay legal principal",
+      "classification": "UNIMPLEMENTED",
+      "scope": "reporting omission, accounting mechanics pass",
+      "assertions": 415,
+      "notes": [
+        "Unpaid principal and contractual maturity remain correct, but no explicit overdue classification appears in report(). An evaluator must derive overdue status from the internal loan register, which is not included in report()."
+      ]
+    },
+    {
+      "id": "H12",
+      "name": "Cash recovery after final legal extinguishment",
+      "classification": "POLICY_UNDEFINED",
+      "scope": "source policy gap correctly not fabricated",
+      "assertions": 190,
+      "notes": [
+        "Generic UNSUPPORTED_EVENT correctly prevents mutation, but lacks a specific residual-recovery explanation."
+      ]
+    },
+    {
+      "id": "H13",
+      "name": "Overlapping bill lots conserve money",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 493,
+      "notes": []
+    },
+    {
+      "id": "H14",
+      "name": "Unfilled auctions do not manufacture parked proceeds",
+      "classification": "POLICY_UNDEFINED",
+      "scope": "source policy gap correctly exposed",
+      "assertions": 532,
+      "notes": [
+        "The source does not authorize partial settlement; engine chooses non-settlement with an explicit undefined response, which is an acceptable conservative outcome under H14. Floor is unmet, not claimed achieved."
+      ]
+    },
+    {
+      "id": "H15",
+      "name": "Discount face and cash conventions are undefined",
+      "classification": "POLICY_UNDEFINED",
+      "scope": "source convention gap correctly exposed",
+      "assertions": 189,
+      "notes": []
+    },
+    {
+      "id": "H16",
+      "name": "Settlement order cannot overdraw Treasury",
+      "classification": "PASS",
+      "scope": "defined mechanics",
+      "assertions": 530,
+      "notes": []
+    },
+    {
+      "id": "H17",
+      "name": "Path decreases rejected and revisions not silently replayed",
+      "classification": "UNIMPLEMENTED",
+      "scope": "path invariant passes; input-vintage system out of implemented perimeter",
+      "assertions": 265,
+      "notes": [
+        "The engine rejects a decreasing target. It does not implement a vintage store, so the revised-input requirement cannot be independently evaluated beyond safe generic rejection."
+      ]
+    },
+    {
+      "id": "H18",
+      "name": "Statutory reset preserves balances and starts new epoch",
+      "classification": "POLICY_UNDEFINED",
+      "scope": "between-quarter mechanics pass; midquarter source policy gap exposed",
+      "assertions": 497,
+      "notes": []
+    }
+  ]
+}

@@ -12,3 +12,7 @@ These are not repaired by tuning a test until it passes.
 8. **Data and policy input production.** Vintage selection, missing releases, holiday calendars, stress indices, collateral and legal attestations are supplied inputs rather than independently authenticated systems. No source of real policy authority is implemented.
 
 The core exposure bound and enforcement of a cap are distinct. A cap-overhang diagnostic does not refute the algebraic bound. Conversely, a valid bound does not prove operational solvency, access, price stability, or a viable transition.
+
+9. **Emergency episode restart:** source rules do not operationally distinguish a new crisis from continuation of an expired episode. Recertification after any prior episode is conservatively POLICY_UNDEFINED; no cool-off period is invented.
+
+Partial/unclosed schedules are also reported POLICY_UNDEFINED with an INCOMPLETE marker. That is missing validation coverage, not a newly discovered contradiction in the monetary design.

@@ -16,6 +16,10 @@ Financial postings require an active quarter and are not admitted after its conf
 
 An overdue facility loan remains unpaid principal; contractual maturity does not repay it. Legal resolution requires an explicit attestation supplied by the scenario. A statutory rebase is permitted between closed quarters only, starts a new proof epoch, preserves R, resets U and sets the new path to R. Mid-quarter rebasing is reported undefined because the disposition of a previously computed allowance is unspecified here.
 
+Reports distinguish completeness from transaction admission. An unclosed endpoint day or open quarter is incomplete and cannot produce an overall PASS. `finalize` closes the endpoint day and evaluates its daily checks, but does not invent quarterly payments or close a quarter automatically. Observations beyond an unclosed quarter, or into an unmodeled next quarter, remain undefined. Future bill maturities beyond a completed declared horizon are not silently executed.
+
+Denominator-only overhang retains its original date and a count of affected quarters while exposure remains grandfathered; new lending stays frozen. Emergency episode history survives expiry. A later certification is not enough to decide whether this is a continued or genuinely new crisis, so reopening is undefined rather than inventing a cool-off interval or resetting the 365-day clock.
+
 ## Facility and auction inputs
 
 Collateral eligibility, the payment-stress trigger, a penalty rate, joint emergency certification and legislative actions are attestations in synthetic inputs. They are not independently measured or authenticated by the program. The engine enforces a 90-calendar-day contractual facility term and the declared 90/365-day emergency timing. It does not supply a collateral haircut, legal waterfall or real liquidity market. Sustained-use review and real public reporting obligations are not automated or validated.

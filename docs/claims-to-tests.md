@@ -14,3 +14,7 @@
 | Unknown mechanisms remain visibly unknown | Undefined auction, expiry, rebase and recovery tests | A resolved production policy |
 
 `npm test` counts software test cases, not economic scenarios or proof of the proposal. `npm run reproduce` generates the modeled transactions and explicit undefined example. No economic kill criteria concerning prices, credit contraction, foreign yields or payment access have been tested.
+
+## Post-baseline audit regressions
+
+`test/audit-regressions.test.mjs` checks endpoint daily finalization and missing-quarter coverage, emergency restart ambiguity, persistent denominator-overhang provenance, centralized policy parameters and rejection of unsupported operational edits. These are repairs prompted by an audit, not unseen confirmations.

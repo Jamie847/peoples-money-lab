@@ -1,5 +1,5 @@
 {
-  "version": "0.7.1-accounting-translation.1",
+  "version": "0.7.1-accounting-translation.2",
   "ordinaryFacilityCap": "0.02",
   "emergencyFacilityCap": "0.05",
   "treasuryQuarterEndRatio": "0.01",
@@ -19,5 +19,12 @@
   "auctionNonClearanceResponse": "POLICY_UNDEFINED",
   "quarterEndCashBreachDuringCure": "POLICY_UNDEFINED",
   "calendarConvention": "Monday-Friday, excluding explicitly configured holidays; not a statutory calendar",
-  "moneyArithmetic": "exact rational amounts; transcendental price/growth computations use JavaScript binary64 and are imported as decimal strings"
+  "moneyArithmetic": "exact rational amounts; transcendental price/growth computations use JavaScript binary64 and are imported as decimal strings",
+  "priceFeedbackLambda": "0.5",
+  "billRateKillCriterion": "0.08",
+  "quartersPerYear": 4,
+  "supportedInflationTargets": [
+    0,
+    0.02
+  ]
 }
