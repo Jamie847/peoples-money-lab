@@ -39,3 +39,16 @@ Variants use the identical fiscal request with borrowing allowed or a separate b
 A usable opening national balance sheet requires common-date debt by holder and instrument, par/book valuation bridges, Treasury cash, Authority assets/liabilities, other monetary owners, trust-fund holdings, and a reconciled conversion base. Monthly cash budget totals need an explicit financing/accrual bridge and maturity/coupon schedules. H.6/H.8/H.4.1 cannot be subtracted across mismatched dates or populations. No national payoff trajectory will be emitted until this gate is satisfied. Missing policies and data remain explicit inputs or blocked cases.
 
 Nonfinancial federal assets, pension/benefit promises, private credit, bank solvency, interest-rate responses, tax-base changes, inflation, demand, political feasibility and legal enforceability are not inferred from accounting identities. A future site may display immutable releases; no website or hosting work is included here.
+
+## Version 0.2 addendum: issuance provenance and allowance coupling
+
+The nine original scenarios account for an assumed authorized issuance. Their constructed target does not independently establish permission to issue. Preserve release 0.1; label this limitation explicitly in new outputs.
+
+A distinct scenario uses the unchanged frozen OperatingEngine, independently specifying R110, starting target110, GDP third-estimate annual observations of 2%, price observations and bases of100 and inflation target0. Compute the allowance before choosing its fiscal allocation. This couples only the allowance interface: no fiscal settlement replay, controller credit, remittance policy, C11 interpretation or full operating-policy compliance claim is added. No C05/C06 or sealed challenge rerun occurs.
+
+| ID | New integration assertion |
+|---|---|
+| DB16 | Frozen controller computes allowance from independent inputs; changing synthetic GDP growth to zero produces zero allowance, without choosing a desired issuance. |
+| DB17 | Allocations above allowance reject; unavailable first price data blocks coupling. |
+| DB18 | Fiscal ledger consumes exactly the computed allocation once; records allowance and allocation separately. |
+| DB19 | Inherited scenarios are labeled assumed-authorized issuance; the ban case's rejected 15 principal stays outstanding and overdue. |

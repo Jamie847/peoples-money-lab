@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "debt-budget-0.2-495e3a711ac30db5",
+  "releaseDigest": "495e3a711ac30db5e86247e5515cd9b9e88fc52e610e63b71a7437ce07ca2122",
+  "releaseDate": "2026-11-01",
+  "implementationBase": "8cdf3e28f932963b854d0b3b92cc4c623e72a34a",
+  "visibility": "PRIVATE_LOCAL_REVIEW",
+  "inputs": {
+    "SCOPE.md": "1dcac9c4421cc0200c5f5acdb93042810f6758448dca26d9a161e0ce994b746a",
+    "README.md": "e4f85e9fda8c8ec5193714f6e57b57e298d5622d7de76693088163b4107f4da0",
+    "model.mjs": "6efbd971ed8eed04942fa51eada8b53103404610fd6237a35c09d10b46f1eb71",
+    "model.test.mjs": "6668417a4cab58f933725643347df95d634c76c0b61f96d2b6c8197c2e576088",
+    "scenarios.mjs": "02e9ae660902eb623ed3e063e4b982f29eea53e666f5071c9f32b42ef136b8d4",
+    "sources.json": "a6eac4627ed6a9d417195dcae7e8faa7c9626b729d74c940a0030ad06c22fa87",
+    "reproduce.mjs": "7f9ca7c1ed279597b243f0e0d915fbaaff40693c9609b6926f226d07f22e3277",
+    "release.test.mjs": "85ff6e03818a5b26d0799bc4b6c99c686d1598f6a1f2ae909fdfc4bd623eba71",
+    "../src/rational.mjs": "e35e23d599ddc6e6a7a4ce4f412baeded2d43c5803fe0704a5158dac4ce14a6e",
+    "historical.mjs": "cd3656a8e8c33599cb86cbd7da89fbb4cfd928665352190bd28f184c4e3329cf",
+    "official/historical-snapshot.json": "4ed67f0edf89216be373875e42627e3002a0da9378a70ba8593d293cfd9c176c",
+    "check.mjs": "c405393c50cdd7df192bec5a33f0c0b12f4a4f6b828a1134e789fbdb8b0f535d",
+    "controller-coupling.mjs": "711656884fa4cd2cb92772fd80f52347c4bf737b65250b41f70ad51058805cc3",
+    "coupling.test.mjs": "f1172af7dca24e04d928703fbb84d532f3203537d16dda53d4856721b9dd2750",
+    "../src/auction072.mjs": "61a21c3ada35aa9b7d3c3fa43c756d4038fecc18bdecd3cf5dc959f75bf8c61e",
+    "../src/calendar.mjs": "6245ce71fb5b9d29b35aa03f7f1cc174c0ea49af94c2c36092fb54be4003a305",
+    "../src/counterexample.mjs": "156e75e2a43f408b6f44d52b8813d05a6c5682e344c680c9133866e3a42dad7f",
+    "../src/data072.mjs": "6ee30b009f30d5d30acb671725fab2b07123877fe94b30349a4a80a67830f4dd",
+    "../src/engine.mjs": "bba26e3d857898557375ae1e0fcab70fb2150b190ba255ea8ea564b9c117d27a",
+    "../src/engine072.mjs": "347a12646dc9db6ff4f409edc300d378b4dd13000ffb251b0aeecc202cd6be30",
+    "../src/ledger.mjs": "e3ce4d1d9bc7958bdd359a8373fa95069f88c77cef8ac59812f3a7cf175fd245",
+    "../src/policy.mjs": "5c6d4e1df7be62c17c3d3476810459d11a2b09c3eea4642f6fe259db2845ea0b",
+    "../src/rules.mjs": "28de7caf44f03ebdc7dd2b6981026872add0d68bb6db9f46d3118b52a3206176",
+    "../src/scenarios.mjs": "0799c46272fb86fac16f65aef2ebf11f26ef2401dc76a305c0c9d1db4fffad91",
+    "../src/stress.mjs": "dc1fc86ab642469d2c33bd4f8ffd45eebfc61f5bde52ebd5e6eab983ca7f2934",
+    "../src/vintages072.mjs": "99570e47302d8c99a59e47ff68dce905b38ce94223d18df93a8531c2095c1fda",
+    "../config/policy-0.7.1.json": "61185f9e0c26501bbc9365660de60618f9b795e026b05276e6bb98763a913787",
+    "../config/policy-0.7.2.json": "9a2958a0e3ffcdaee7a70dea6da812bb4479dd4805bcd0dbcbc10e6a7a7e6ce0",
+    "../fixtures/federal-calendar-2027.json": "41fea94f99b64c4e7fb9515c5a38d42d4543a39d4384a4cf7bd7f2ae5fb476fe"
+  },
+  "sourceDates": [
+    {
+      "id": "debt-perimeter",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "mspd",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "mts",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "h41-20261001",
+      "released": "2026-10-01",
+      "asOf": "2026-09-30",
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "ssa-investments",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "cash-budget-bridge",
+      "released": null,
+      "asOf": "2024-09-30",
+      "retrieved": "2026-11-01"
+    }
+  ],
+  "nationalReconciliation": {
+    "status": "BLOCKED",
+    "gaps": [
+      "MISSING_grossTreasury",
+      "MISSING_debtHeldByPublic",
+      "MISSING_intragovernmental",
+      "MISSING_authorityTreasuries",
+      "MISSING_socialSecurity",
+      "MISSING_treasuryCash",
+      "MISSING_conversionBase",
+      "DATE_MISMATCH",
+      "INSTRUMENT_AND_COUNTERPART_BRIDGE_REQUIRED"
+    ],
+    "nationalScenarioPermitted": false
+  },
+  "classification": "Synthetic accounting diagnostics, not unseen challenge or economic validation",
+  "files": {
+    "historical-checks.json": "18dbb3abc27bedbc74532fed48cb280c21a0113ef77efe4315247ec48ed16f61",
+    "results.json": "ccadbf1a36c856874b481af63fecbdb5a7d3cde50177c23ab4bdebe810009dc0",
+    "sources.json": "a6eac4627ed6a9d417195dcae7e8faa7c9626b729d74c940a0030ad06c22fa87",
+    "summary.csv": "83a1431552478dae985bc2b44c1555bec597e4877f18e3da4ed56ecb4fe372cf",
+    "journals.csv": "6b3d76b6f1ee9270c30d02b11d82ed191718616d988b3753a6e795b6827cf8be",
+    "REPORT.md": "94b28ef37044994ca80cc1bc58044efa4bf31baace8b94044bf598bb9559d0a3"
+  }
+}
