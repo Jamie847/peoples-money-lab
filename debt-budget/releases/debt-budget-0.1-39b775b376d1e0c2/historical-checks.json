@@ -1,0 +1,136 @@
+{
+  "classification": "Arithmetic checks on researcher-supplied historical observations; not independent raw-data extraction",
+  "input": {
+    "schemaVersion": 1,
+    "classification": "Historical observations supplied by the separate official-source researcher; not scenario assumptions",
+    "stockDate": "2026-09-30",
+    "flowPeriod": [
+      "2025-10-01",
+      "2026-09-30"
+    ],
+    "retrievedOn": "2026-11-01",
+    "consumerVerification": {
+      "archiveBytes": 4380265,
+      "archiveSha256": "f063b38ed4de1cbea9ec3bcb879ed04f9028a886264938ba5b32ea97bd112ab9",
+      "archiveStatus": "Initially materialized and hash verified; extracted manifest read; temporary Linux files subsequently disappeared",
+      "rawHashStatus": "NOT_COMPLETED: single retry returned a cloud-only workspace path unavailable on the consumer executor",
+      "independentNumericChecks": "Exact arithmetic only; raw source extraction has not been independently reproduced here",
+      "nationalOpeningStatus": "BLOCKED_UNRECONCILED"
+    },
+    "observations": {
+      "debtHeldByPublic": {
+        "value": "32425012546390.57",
+        "unit": "USD",
+        "asOf": "2026-09-30",
+        "source": "debt-to-penny"
+      },
+      "intragovernmental": {
+        "value": "7746812554949.74",
+        "unit": "USD",
+        "asOf": "2026-09-30",
+        "source": "debt-to-penny"
+      },
+      "grossTreasury": {
+        "value": "40171825101340.31",
+        "unit": "USD",
+        "asOf": "2026-09-30",
+        "source": "debt-to-penny"
+      },
+      "receipts": {
+        "value": "5403326758960.81",
+        "unit": "USD",
+        "period": "FY2026",
+        "source": "mts9"
+      },
+      "netOutlays": {
+        "value": "7395799983313.23",
+        "unit": "USD",
+        "period": "FY2026",
+        "source": "mts9"
+      },
+      "netInterest": {
+        "value": "1051753969311.11",
+        "unit": "USD",
+        "period": "FY2026",
+        "source": "mts9"
+      },
+      "grossInterest": {
+        "value": "1359953253416.84",
+        "unit": "USD",
+        "period": "FY2026",
+        "source": "mts5"
+      },
+      "interestExpenseApi": {
+        "value": "1360396866366.01",
+        "unit": "USD",
+        "period": "FY2026",
+        "source": "interest-expense"
+      },
+      "restorationOfInterest": {
+        "value": "443612949.17",
+        "unit": "USD",
+        "period": "FY2026",
+        "source": "interest-expense"
+      },
+      "mspdGross": {
+        "value": "40171825.1066275",
+        "unit": "USD millions",
+        "asOf": "2026-09-30",
+        "source": "mspd1"
+      },
+      "fedTreasuries": {
+        "value": "4564161",
+        "unit": "USD millions",
+        "asOf": "2026-09-30",
+        "released": "2026-10-01",
+        "source": "h41",
+        "basis": "Wednesday face value plus TIPS inflation compensation; not amortized carrying or market value"
+      },
+      "OASI": {
+        "value": "2180424",
+        "unit": "USD millions rounded",
+        "asOf": "2026-09-30",
+        "source": "mspd-pdf-page15",
+        "basis": "Researcher visually checked; protected, not cancellation target"
+      },
+      "DI": {
+        "value": "260637",
+        "unit": "USD millions rounded",
+        "asOf": "2026-09-30",
+        "source": "mspd-pdf-page15",
+        "basis": "Researcher visually checked; protected, not cancellation target"
+      }
+    },
+    "sources": {
+      "debt-to-penny": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?filter=record_date:eq:2026-09-30",
+      "mts9": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_9?filter=record_date:eq:2026-09-30",
+      "mts5": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_5?filter=record_date:eq:2026-09-30",
+      "interest-expense": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/interest_expense?filter=record_date:eq:2026-09-30",
+      "mspd1": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/debt/mspd/mspd_table_1?filter=record_date:eq:2026-09-30",
+      "mts-final-pdf": "https://fiscaldata.treasury.gov/static-data/published-reports/mts/MonthlyTreasuryStatement_202609.pdf",
+      "mspd-pdf-page15": "https://fiscaldata.treasury.gov/static-data/published-reports/mspd-entire/MonthlyStatementPublicDebt_Entire_202609.pdf",
+      "h41": "https://www.federalreserve.gov/releases/h41/20261001/"
+    },
+    "gates": [
+      "MSPD gross minus Debt to the Penny is USD 5287.19: source-basis explanation unresolved",
+      "Interest Expense API minus MTS gross interest equals USD 443612949.17 restoration numerically; accounting explanation unresolved",
+      "Eight successful raw API datasets, not nine; failed calls are gaps",
+      "MSPD maturity source has 893 rows including reopenings and total; do not sum every row",
+      "CUSIP 912797SA6 has four rows, outstanding amount only on first; grouping and totals not reproduced locally",
+      "No matched SOMA CUSIP netting, Treasury cash/financing bridge or eligible conversion base",
+      "No national balance-sheet or payoff path has been reconciled"
+    ]
+  },
+  "debtIdentityResidual": "0",
+  "derived": {
+    "primaryNetOutlays": "158601150350053/25",
+    "primaryDeficit": "94071925504131/100",
+    "unifiedDeficit": "99623661217621/50"
+  },
+  "unreconciled": {
+    "mspdMinusPennyUSD": "528719/100",
+    "interestExpenseMinusGrossUSD": "44361294917/100",
+    "restorationNumericResidual": "0"
+  },
+  "status": "BLOCKED_NATIONAL_RECONCILIATION"
+}

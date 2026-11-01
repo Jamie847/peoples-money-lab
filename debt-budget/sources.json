@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "retrievedOn": "2026-11-01",
+  "nationalOpeningStatus": "BLOCKED_UNRECONCILED",
+  "sources": [
+    {
+      "id": "debt-perimeter",
+      "url": "https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/",
+      "title": "Treasury Debt to the Penny",
+      "claim": "Gross Treasury debt comprises debt held by the public and intragovernmental holdings.",
+      "releaseDate": null,
+      "observationDate": null,
+      "access": "Official search metadata located; direct page returned HTTP 403",
+      "use": "Definition only; no numeric observation imported"
+    },
+    {
+      "id": "mspd",
+      "url": "https://fiscaldata.treasury.gov/datasets/monthly-statement-public-debt/",
+      "title": "Monthly Statement of the Public Debt",
+      "claim": "Candidate monthly instrument and debt-perimeter source.",
+      "releaseDate": null,
+      "observationDate": null,
+      "access": "Official search metadata located; complete tables pending research",
+      "use": "Not yet ingested"
+    },
+    {
+      "id": "mts",
+      "url": "https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/",
+      "title": "Monthly Treasury Statement",
+      "claim": "Candidate source for receipts, outlays and financing reconciliation.",
+      "releaseDate": null,
+      "observationDate": null,
+      "access": "Direct page returned HTTP 403",
+      "use": "Not yet ingested; cash/accrual bridge required"
+    },
+    {
+      "id": "h41-20261001",
+      "url": "https://www.federalreserve.gov/releases/h41/20261001/",
+      "title": "H.4.1 release October 1, 2026, Table 1",
+      "claim": "The September 30 Wednesday Treasury-security observation differs from its weekly average.",
+      "releaseDate": "2026-10-01",
+      "observationDate": "2026-09-30",
+      "unit": "USD millions",
+      "candidateWednesdayValue": "4564161",
+      "weeklyAverageNotUsed": "4560550",
+      "access": "Official HTML inspected",
+      "use": "Historical candidate only; Wednesday face value including TIPS compensation. Excluded from synthetic scenarios; carrying-value and counterpart reconciliation pending."
+    },
+    {
+      "id": "ssa-investments",
+      "url": "https://www.ssa.gov/oact/progdata/fundFAQ.html",
+      "title": "SSA Trust Fund FAQs",
+      "claim": "Trust funds hold Treasury special issues; special issues can be redeemed at face value before maturity.",
+      "releaseDate": null,
+      "observationDate": null,
+      "access": "Official HTML inspected",
+      "use": "Perimeter protection and limitation: early special-issue redemption is outside this initial contractual-maturity engine"
+    },
+    {
+      "id": "cash-budget-bridge",
+      "url": "https://fiscal.treasury.gov/accounting/us-financial-report/2024/statements-of-change-cash-balance",
+      "title": "FY2024 statements of changes in cash balance from budget and other activities",
+      "claim": "Borrowing and principal repayment are financing; official budget interest accrual and cash payments require reconciliation.",
+      "releaseDate": null,
+      "observationDate": "2024-09-30",
+      "access": "Official HTML inspected",
+      "use": "Accounting distinction only; no FY2024 amounts mixed into FY2026 opening"
+    }
+  ],
+  "gaps": [
+    "Matching Treasury FY2026 observations and instrument schedules",
+    "Authority Treasury par/carrying-value bridge including inflation compensation",
+    "Treasury cash and all monetary counterpart stocks at a common date",
+    "Social Security and other intragovernmental instrument holdings",
+    "Matched H.6/H.8/H.4.1 conversion eligibility and coverage bridge",
+    "MTS budget-to-cash and debt-stock reconciliation",
+    "Explicit cancellation law and accrued coupon treatment",
+    "Debt-service rates and demand as assumptions, not predicted outcomes"
+  ],
+  "researcherSnapshot": "official/historical-snapshot.json",
+  "consumerRawVerification": "Incomplete after temporary-directory loss and cloud-only retry; historical arithmetic independently checked, raw extraction not reproduced"
+}
