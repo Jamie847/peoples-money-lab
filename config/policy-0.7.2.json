@@ -1,5 +1,5 @@
 {
-  "version": "0.7.2-operating-rules.work-in-progress.2",
+  "version": "0.7.2-operating-rules.1",
   "auctionMaximumRate": "0.06",
   "shortAuctionsForDirectWindow": 2,
   "shortAuctionsForReview": 3,
@@ -8,8 +8,8 @@
   "cashRemedyBusinessDays": 5,
   "overhangEscalationQuarters": 8,
   "publicRegisterIntervalDays": 7,
-  "recoveryPenaltyClassification": "POLICY_UNDEFINED",
-  "recoveryOverpaymentDisposition": "POLICY_UNDEFINED",
-  "overlappingDirectSaleAuthorization": "POLICY_UNDEFINED",
-  "status": "INCOMPLETE_NOT_FROZEN"
+  "recoveryPenaltyClassification": "H_NON_PRINCIPAL_CONTRACTUAL_RECEIPTS",
+  "recoveryOverpaymentDisposition": "REJECT_ATOMICALLY",
+  "overlappingDirectSaleAuthorization": "LATEST_QUALIFYING_AUCTION_RESERVED_COMMITMENTS",
+  "status": "FROZEN_FOR_INDEPENDENT_CHALLENGE"
 }

@@ -10,7 +10,7 @@ import {ingestRelease,computeFromVintages} from './vintages072.mjs';
 export const OPERATING_POLICY=Object.freeze(JSON.parse(fs.readFileSync(new URL('../config/policy-0.7.2.json',import.meta.url),'utf8')));
 const federal2027=JSON.parse(fs.readFileSync(new URL('../fixtures/federal-calendar-2027.json',import.meta.url),'utf8'));
 const check=(ok,code,message,status='FAIL')=>{if(!ok)throw Object.assign(Error(message),{code,status});};
-const custom=new Set(['recover','repayFacility','impairFacility','discharge','auction','settle_auction','close_auction','direct_sale','bill_interest','queue_dividend','dividend','statutory_rebase','enact_rebase','collateral_possession','collateral_sale','record_vote','defer_tranche','schedule_tranches','ingest_release','target_observation','emergency_start']);
+const custom=new Set(['record_contractual_charges','settle_direct_sale','recover','repayFacility','impairFacility','discharge','auction','settle_auction','close_auction','direct_sale','bill_interest','queue_dividend','dividend','statutory_rebase','enact_rebase','collateral_possession','collateral_sale','record_vote','defer_tranche','schedule_tranches','ingest_release','target_observation','emergency_start']);
 const qkey=date=>date.slice(0,4)+'-Q'+Math.ceil(+date.slice(5,7)/3);
 const boundary=date=>date.endsWith('-01')&&['01','04','07','10'].includes(date.slice(5,7));
 
@@ -31,6 +31,11 @@ export class OperatingEngine extends Engine {
     check(sum(ls.map(x=>q(x.residual))).eq(this.U),'RESIDUAL_REGISTER','Residual register must equal U');
     check(sum(ls.map(x=>q(x.impairment))).eq(get(this.accounts,'Authority','facilityAllowance').neg()),'IMPAIRMENT_REGISTER','Loan impairment register must match the allowance');
     for(const [id,l] of Object.entries(this.operating.loans))check(q(l.residual).cmp(0)>=0&&q(l.impairment).cmp(0)>=0&&q(l.impairment).cmp(this.loans[id].principal)<=0,'LOAN_REGISTER','Invalid loan-level carrying amount or residual');
+    for(const l of ls)check(q(l.interest??0).cmp(0)>=0&&q(l.penalties??0).cmp(0)>=0,'CONTRACT_REGISTER','Contractual dues cannot be negative');
+    for(const a of Object.values(this.operating.auctions)){
+      check(q(a.awarded).add(a.retailCommitted).cmp(a.offered)<=0,'AUCTION_RESERVATIONS','Binding commitments exceed authorization');
+      check(sum(Object.values(a.orders).map(o=>q(o.amount))).eq(a.retailCommitted)&&sum(Object.values(a.orders).map(o=>q(o.settled))).eq(a.retailSettled),'ORDER_REGISTER','Order register must reconcile');
+    }
   }
   note(status,code,message,extra={}) {
     // These old diagnostic gaps are explicitly resolved by the adopted operating rules.
@@ -92,7 +97,7 @@ export class OperatingEngine extends Engine {
   publicRegister(){
     const cap=this.cap()??this.ordinaryCap(),denominator=q(this.quarter?.priorR??this.operating.lastPriorR??this.R());
     return {P:this.P().toString(),U:this.U.toString(),E:this.exposure().toString(),cap:cap.toString(),denominatorSnapshot:denominator.toString(),overhang:this.exposure().sub(cap).max(0).toString(),lendingFreeze:this.exposure().cmp(cap)>0,
-      loans:Object.entries(this.loans).map(([id,l])=>({loanId:id,principal:l.principal.toString(),residual:this.operating.loans[id]?.residual??'0',maturity:l.maturity,overduePrincipal:l.maturity&&this.date>l.maturity?l.principal.toString():'0',overdueCalendarDays:l.maturity&&l.principal.cmp(0)>0?Math.max(0,dayNumber(this.date)-dayNumber(l.maturity)):0,episode:this.operating.loans[id]?.episode??null}))};
+      loans:Object.entries(this.loans).map(([id,l])=>({loanId:id,principal:l.principal.toString(),residual:this.operating.loans[id]?.residual??'0',contractualInterestDue:this.operating.loans[id]?.interest??'0',contractualPenaltiesDue:this.operating.loans[id]?.penalties??'0',maturity:l.maturity,overduePrincipal:l.maturity&&this.date>l.maturity?l.principal.toString():'0',overdueCalendarDays:l.maturity&&l.principal.cmp(0)>0?Math.max(0,dayNumber(this.date)-dayNumber(l.maturity)):0,episode:this.operating.loans[id]?.episode??null}))};
   }
   loan(id){check(this.loans[id]&&this.operating.loans[id],'LOAN_ID','Known persistent loan ID required');return {base:this.loans[id],detail:this.operating.loans[id]};}
   execute(event){
@@ -118,7 +123,7 @@ export class OperatingEngine extends Engine {
         event={...event,type:'issue',amount:tranche.amount,remittance:q(tranche.amount).min(this.quarter.remittanceBudget.sub(this.quarter.remitted)).toString()};
       }
       if(event.type==='issue'&&!tranche&&this.operating.tranches.some(x=>!x.paid&&x.quarter===this.quarter?.id))check(false,'SCHEDULED_ISSUANCE_ROUTE','Use settle_tranche for the active fixed schedule');
-      if(event.type==='payInterest')check(false,'RECOVERY_INTEREST_WATERFALL_UNIMPLEMENTED','Use identified settled recoveries; separate loan-level interest waterfall remains unimplemented','POLICY_UNDEFINED');
+      if(event.type==='payInterest')check(false,'IDENTIFIED_RECEIPT_REQUIRED','Use the identified settled recovery route and recorded contractual amounts');
       if(event.type==='begin_quarter'){
         check(!this.operating.stagedReset||event.date<this.operating.stagedReset.effectiveDate,'RESET_DUE','Apply the staged boundary reset before computing an allowance');
         if(event.path===undefined){check(this.operating.data?.lastTarget!==null&&this.operating.data?.lastTarget!==undefined,'NO_VERIFIED_TARGET','No issuance computation before the first verified target','POLICY_UNDEFINED');event={...event,path:this.operating.data.lastTarget};}
@@ -173,21 +178,31 @@ export class OperatingEngine extends Engine {
           this.emergency={origin,expiry:initial<hard?initial:hard,recertified:this.date,continued:!!prior&&!clean};
           this.publish('emergency-certification',{...this.emergency});break;
         }
+        case 'record_contractual_charges':{
+          const {detail:d}=this.loan(event.loanId),interest=q(event.interest??0),penalties=q(event.penalties??0);
+          check(event.contractualAmountsAttested===true&&typeof event.contractRef==='string'&&event.contractRef.length>0,'CONTRACT_REQUIRED','Explicit contractual source and attestation required; no inferred accrual');
+          check(typeof event.chargeId==='string'&&event.chargeId&&!Object.values(this.operating.loans).some(l=>l.charges?.some(c=>c.id===event.chargeId)),'CHARGE_ID','Unique contractual charge ID required');
+          check(interest.cmp(0)>=0&&penalties.cmp(0)>=0,'CONTRACT_AMOUNT','Nonnegative contractual amounts required');
+          d.interest=q(d.interest??0).add(interest).toString();d.penalties=q(d.penalties??0).add(penalties).toString();
+          (d.charges??=[]).push({id:event.chargeId,contractRef:event.contractRef,interest:interest.toString(),penalties:penalties.toString()});break;
+        }
         case 'repayFacility':case 'recover':case 'collateral_sale':{
           financial();const {base:l,detail:d}=this.loan(event.loanId);
           check(typeof event.receiptId==='string'&&event.receiptId&&!this.operating.receipts.includes(event.receiptId),'RECOVERY_RECEIPT','Unique settled receipt ID required');
           check(event.settled===true,'RECOVERY_NOT_SETTLED','Only settled money is recovery');
           let cash=amount;
           if(event.type==='collateral_sale'){const gross=q(event.gross),costs=q(event.costs);check(gross.cmp(0)>=0&&costs.cmp(0)>=0&&costs.cmp(gross)<=0,'COLLATERAL_PROCEEDS','Gross and expenses must reconcile');cash=gross.sub(costs);check(cash.eq(amount),'COLLATERAL_NET','Amount must equal net settled cash');detail={gross:gross.toString(),expenses:costs.toString(),net:cash.toString()};}
-          const principal=cash.min(l.principal),residual=cash.sub(principal).min(d.residual),excess=cash.sub(principal).sub(residual);
-          check(excess.eq(0),'RECOVERY_EXCESS_UNRESOLVED','Interest/penalty/excess disposition awaits explicit policy; entire receipt rejected','POLICY_UNDEFINED');
+          check(cash.cmp(l.principal.add(d.residual).add(d.interest??0).add(d.penalties??0))<=0,'RECOVERY_OVERPAYMENT','Receipt exceeds all recorded contractual amounts');
+          const principal=cash.min(l.principal),residual=cash.sub(principal).min(d.residual),interest=cash.sub(principal).sub(residual).min(d.interest??0),penalties=cash.sub(principal).sub(residual).sub(interest);
           const carrying=l.principal.sub(d.impairment),release=principal.sub(carrying).max(0);
           if(principal.cmp(0)>0){journal('repayFacility',principal);l.principal=l.principal.sub(principal);}
           if(release.cmp(0)>0){const rows=[['Authority','facilityAllowance',release],['Authority','equity',release]];post(this.accounts,rows);entries.push(...rows);d.impairment=q(d.impairment).sub(release).toString();}
           if(residual.cmp(0)>0){journal('payInterest',residual);d.residual=q(d.residual).sub(residual).toString();this.U=this.U.sub(residual);}
-          this.quarter.netIncome=this.quarter.netIncome.add(release).add(residual);
-          this.operating.recovered=q(this.operating.recovered??0).add(cash).toString();
-          this.operating.receipts.push(event.receiptId);F=cash.neg();detail={...detail,principal:principal.toString(),residual:residual.toString(),lossRecoveryIncome:release.add(residual).toString(),interestIncome:'0',F:F.toString()};
+          H=interest.add(penalties);if(H.cmp(0)>0)journal('payInterest',H);
+          d.interest=q(d.interest??0).sub(interest).toString();d.penalties=q(d.penalties??0).sub(penalties).toString();
+          this.quarter.netIncome=this.quarter.netIncome.add(release).add(residual).add(H);
+          this.operating.recovered=q(this.operating.recovered??0).add(principal).add(residual).toString();
+          this.operating.receipts.push(event.receiptId);F=principal.add(residual).neg();detail={...detail,principal:principal.toString(),residual:residual.toString(),lossRecoveryIncome:release.add(residual).toString(),interestIncome:interest.toString(),penaltyIncome:penalties.toString(),F:F.toString(),H:H.toString()};
           this.publish('cash-recovery',{loanId:event.loanId,...detail});break;
         }
         case 'impairFacility':{
@@ -203,20 +218,40 @@ export class OperatingEngine extends Engine {
           check(typeof event.auctionId==='string'&&event.auctionId&&!this.operating.auctions[event.auctionId],'AUCTION_ID','Unique auction ID required');
           check(dayNumber(event.maturity)>dayNumber(this.date)&&dayNumber(event.maturity)-dayNumber(this.date)<=366,'BILL_TERM','Valid bill maturity required');
           detail=awardAuction(amount,event.bids??[],OPERATING_POLICY.auctionMaximumRate);
-          this.operating.auctions[event.auctionId]={...detail,maturity:event.maturity,settled:'0',settlements:{},opened:this.date,closed:false,retailSettled:'0'};this.publish('auction-awards',{auctionId:event.auctionId,...detail});break;
+          if(event.settlementDate!==undefined)check(dayNumber(event.settlementDate)>=dayNumber(this.date)&&event.settlementDate<event.maturity,'SETTLEMENT_DATE','Contractual settlement date must precede maturity');
+          this.operating.window=null;this.operating.latestAuction=event.auctionId;(this.operating.auctionOrder??=[]).push(event.auctionId);
+          this.operating.auctions[event.auctionId]={...detail,maturity:event.maturity,settlementDate:event.settlementDate??null,settled:'0',settlements:{},opened:this.date,closed:false,retailCommitted:'0',retailSettled:'0',orders:{}};this.publish('auction-awards',{auctionId:event.auctionId,...detail});break;
         }
         case 'settle_auction':{
-          financial();const a=this.operating.auctions[event.auctionId];check(a&&!a.closed,'AUCTION_STATE','Open auction required');
+          financial();const a=this.operating.auctions[event.auctionId];check(a,'AUCTION_STATE','Known binding auction required');
+          check(!a.settlementDate||this.date===a.settlementDate,'SETTLEMENT_DATE','Use original contractual settlement date');
           const award=a.awards.find(x=>x.bid===event.bid);check(award&&q(a.settlements[event.bid]??0).add(amount).cmp(award.amount)<=0,'AUCTION_AWARD','Cannot settle more than this bid award');
           check(this.date<a.maturity,'BILL_MATURED','Cannot settle an already matured bill');journal('sale');a.settled=q(a.settled).add(amount).toString();a.settlements[event.bid]=q(a.settlements[event.bid]??0).add(amount).toString();
           const id='auction:'+event.auctionId;this.bills[id]??={principal:q(0),maturity:a.maturity,rate:a.clearingRate};this.bills[id].principal=this.bills[id].principal.add(amount);break;
         }
         case 'close_auction':{
-          const a=this.operating.auctions[event.auctionId];check(a&&!a.closed,'AUCTION_STATE','Open auction required');a.closed=true;const short=q(a.settled).cmp(a.offered)<0;this.operating.shortStreak=short?this.operating.shortStreak+1:0;
+          const a=this.operating.auctions[event.auctionId];check(a&&!a.closed,'AUCTION_STATE','Open auction required');a.closed=true;a.shortAtClose=q(a.settled).cmp(a.offered)<0;
+          this.operating.shortStreak=0;for(const id of [...this.operating.auctionOrder].reverse()){const prior=this.operating.auctions[id];if(!prior.closed||!prior.shortAtClose)break;this.operating.shortStreak++;}
           this.publish('auction-settlement',{auctionId:event.auctionId,intendedWithdrawal:a.offered,actualWithdrawal:a.settled,shortfall:q(a.offered).sub(a.settled).toString(),durationCalendarDays:dayNumber(this.date)-dayNumber(a.opened),upcomingMaturities:Object.entries(this.bills).filter(([,b])=>b.maturity&&b.principal.cmp(0)>0).map(([id,b])=>({billId:id,date:b.maturity,principal:b.principal.toString()})),directWindowEligible:this.operating.shortStreak>=2,reviewRequired:this.operating.shortStreak>=3});
-          if(this.operating.shortStreak>=2)this.operating.window={auctionId:event.auctionId,rate:a.clearingRate??OPERATING_POLICY.auctionMaximumRate,status:'POLICY_UNDEFINED_AUTHORIZATION_SCOPE'};break;
+          if(this.operating.shortStreak>=2){const id=this.operating.latestAuction,latest=this.operating.auctions[id];this.operating.window={auctionId:id,rate:latest.clearingRate??OPERATING_POLICY.auctionMaximumRate};}break;
         }
-        case 'direct_sale':check(false,'DIRECT_SALE_AUTHORIZATION_UNRESOLVED','Remaining authorization and overlapping windows await policy clarification; no settlement','POLICY_UNDEFINED');break;
+        case 'direct_sale':{
+          financial();const w=this.operating.window,a=this.operating.auctions[event.auctionId];
+          check(w&&w.auctionId===event.auctionId&&event.auctionId===this.operating.latestAuction,'DIRECT_WINDOW_CLOSED','Latest qualifying direct-sale window required');
+          check(event.paymentAccountHolderAttested===true,'DIRECT_BUYER','Payment-account holder attestation required');
+          check(typeof event.orderId==='string'&&event.orderId&&!Object.values(this.operating.auctions).some(x=>x.orders[event.orderId]),'ORDER_ID','Unique binding order ID required');
+          check(amount.cmp(0)>0&&amount.cmp(q(a.offered).sub(a.awarded).sub(a.retailCommitted))<=0,'DIRECT_QUANTITY','Binding awards and orders already reserve authorization');
+          check(this.date<a.maturity&&(event.rate===undefined||q(event.rate).eq(w.rate)),'DIRECT_TERMS','Original maturity and window rate required');
+          if(event.settlementDate!==undefined)check(dayNumber(event.settlementDate)>=dayNumber(this.date)&&event.settlementDate<a.maturity,'SETTLEMENT_DATE','Contractual settlement date must precede maturity');
+          a.orders[event.orderId]={amount:amount.toString(),settled:'0',rate:w.rate,maturity:a.maturity,settlementDate:event.settlementDate??null};a.retailCommitted=q(a.retailCommitted).add(amount).toString();detail={...a.orders[event.orderId]};break;
+        }
+        case 'settle_direct_sale':{
+          financial();const a=this.operating.auctions[event.auctionId],o=a?.orders[event.orderId];check(o,'ORDER_ID','Existing binding order required');
+          check(this.date<o.maturity&&(!o.settlementDate||this.date===o.settlementDate),'SETTLEMENT_DATE','Preserve original contractual settlement terms');
+          check(amount.cmp(0)>0&&q(o.settled).add(amount).cmp(o.amount)<=0,'DIRECT_SETTLEMENT','Settlement cannot exceed reserved order');
+          journal('sale');o.settled=q(o.settled).add(amount).toString();a.retailSettled=q(a.retailSettled).add(amount).toString();
+          const id='direct:'+event.orderId;this.bills[id]??={principal:q(0),maturity:o.maturity,rate:o.rate};this.bills[id].principal=this.bills[id].principal.add(amount);break;
+        }
         case 'bill_interest':financial();check(this.bills[event.billId],'BILL_ID','Known bill required');journal('spend');this.dischargeObligations(amount);detail={category:'bill-interest',amount:amount.toString(),amountBasis:'explicit synthetic contractual payment input'};break;
         case 'queue_dividend':this.publish('dividend-queued',{amount:amount.toString(),credited:'0'});break;
         case 'dividend':{
@@ -267,5 +302,5 @@ export class OperatingEngine extends Engine {
     for(const [id,value]of Object.entries(reductions)){const {detail:l}=this.loan(id),amount=q(value);check(amount.cmp(0)>=0&&amount.cmp(l.residual)<=0,'RESET_ALLOCATION','Reduction exceeds identified residual');validated[id]=amount.toString();}
     check(sum(Object.values(validated).map(q)).eq(this.U.sub(target)),'RESET_ALLOCATION_TOTAL','Named reductions must reconcile to statutory residual target');return validated;
   }
-  report(){return {...super.report(),policyVersion:OPERATING_POLICY.version,implementationStatus:OPERATING_POLICY.status,publications:structuredClone(this.operating.publications),loanRegister:this.publicRegister(),cashRemedy:structuredClone(this.operating.remedy),cashRemedies:structuredClone(this.operating.remedies),pendingReset:structuredClone(this.operating.stagedReset),tranches:structuredClone(this.operating.tranches),dataComputations:structuredClone(this.operating.computations),auctionShortfalls:Object.entries(this.operating.auctions).map(([id,a])=>({auctionId:id,asOfDate:this.date,intended:a.offered,settled:a.settled,unfilled:q(a.offered).sub(a.settled).sub(a.retailSettled).toString(),durationCalendarDays:dayNumber(this.date)-dayNumber(a.opened),brakeTarget:this.operating.data?.brake?.targetStock??null,actualB:get(this.accounts,'Authority','B').toString()})),unresolved:['recovery penalties/excess','overlapping direct-sale authorization'],acceptanceStatus:'PARTIAL_IMPLEMENTATION_NOT_FROZEN'};}
+  report(){return {...super.report(),policyVersion:OPERATING_POLICY.version,implementationStatus:OPERATING_POLICY.status,publications:structuredClone(this.operating.publications),loanRegister:this.publicRegister(),cashRemedy:structuredClone(this.operating.remedy),cashRemedies:structuredClone(this.operating.remedies),pendingReset:structuredClone(this.operating.stagedReset),tranches:structuredClone(this.operating.tranches),dataComputations:structuredClone(this.operating.computations),auctionCommitments:structuredClone(this.operating.auctions),auctionShortfalls:Object.entries(this.operating.auctions).map(([id,a])=>({auctionId:id,asOfDate:this.date,intended:a.offered,settled:a.settled,unfilled:q(a.offered).sub(a.settled).sub(a.retailSettled).toString(),durationCalendarDays:dayNumber(this.date)-dayNumber(a.opened),brakeTarget:this.operating.data?.brake?.targetStock??null,actualB:get(this.accounts,'Authority','B').toString()})),unresolved:[],unsupported:['contractual renewals','cross-month tranche deferral','unattested contractual accrual'],acceptanceStatus:'FROZEN_FOR_INDEPENDENT_CHALLENGE'};}
 }

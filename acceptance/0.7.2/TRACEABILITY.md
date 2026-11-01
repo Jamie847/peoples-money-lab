@@ -1,6 +1,6 @@
 # A01-A48 visible acceptance coverage
 
-Work in progress; not an implementation freeze or held-out evaluation. PASS is limited to the listed visible assertions, not economic validation. Unresolved or unsupported paths remain explicit.
+Frozen for an independent challenge; these visible cases are not held-out evaluation. PASS is limited to the listed visible assertions, not economic validation. Unresolved or unsupported paths remain explicit.
 
 | Case | Status | Evidence / limitation |
 | --- | --- | --- |
@@ -13,7 +13,7 @@ Work in progress; not an implementation freeze or held-out evaluation. PASS is l
 | A07 | PASS | Above-ceiling bid excluded. Tests: `A05-A07` |
 | A08 | PASS | Awards and actual settlement separated; rejection atomic. Tests: `A08:` |
 | A09 | PASS | Consecutive short sequence and full-auction reset. Tests: `A09:` |
-| A10 | POLICY_UNDEFINED | Author decision pending: remaining and overlapping direct-sale authorization. Tests: `A10 unresolved` |
+| A10 | PASS | Author-approved latest-window limit, binding reservations, original settlement terms, known/absent clearing rates and atomic excess rejection. Tests: `A10 amended` |
 | A11 | PASS | No phantom demand; principal maturity settles. Tests: `A11-A12:` |
 | A12 | PASS | Discount instrument rejected before posting. Tests: `A11-A12:` |
 | A13 | PASS | Par issue, contractual-input interest and maturity separate. Tests: `A13:` |
@@ -34,7 +34,7 @@ Work in progress; not an implementation freeze or held-out evaluation. PASS is l
 | A28 | PASS | Impaired legal-principal recovery restores prior loss once. Tests: `A28:` |
 | A29 | PASS | R104/P0/U4 becomes R103/P0/U3; net worth -103. Tests: `A29:` |
 | A30 | PASS | Discharge changes P/U, not R/F. Tests: `A30-A31:` |
-| A31 | POLICY_UNDEFINED | Principal-only and duplicate receipt checks pass; excess waterfall awaits author decision. Tests: `A30-A31:` |
+| A31 | PASS | Recorded contractual interest and penalties enter H once; principal/residual only enter F; excess and duplicate receipts rejected atomically. Tests: `A31 amended`, `A30-A31:` |
 | A32 | PASS | Noncash possession does not recover; net settlement reconciles gross and costs. Tests: `A32:` |
 | A33 | PASS | Recovery income cannot exceed issuance allowance. Tests: `A33:` |
 | A34 | PASS | Invalid reset rejected atomically. Tests: `A34-A36:` |
@@ -53,6 +53,6 @@ Work in progress; not an implementation freeze or held-out evaluation. PASS is l
 | A47 | PASS | Cash recovery reported separately from denominator room restoration. Tests: `A47 weekly`, `A03 denominator`, `A44-A47:` |
 | A48 | PASS | Fixed scheduled payments continue after missing data; no additional allowance. Tests: `A48 scheduled` |
 
-Counts: PASS 46; POLICY_UNDEFINED 2.
+Counts: PASS 48.
 
 Regenerate with `npm run acceptance:072`. Machine-readable results are generated in `reports-072/acceptance-results.json`. The frozen SPECIFICATION.md and its hash are unchanged.

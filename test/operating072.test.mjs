@@ -14,6 +14,34 @@ const begin=e=>ok(ev(e,'begin_quarter',{path:e.path.toString(),verifiedTarget:tr
 const reject=(e,type,fields,code)=>{const before=e.snapshot();const r=ev(e,type,fields);assert.equal(r.applied,false);assert.ok(r.issues.some(x=>x.code===code),JSON.stringify(r));assert.deepEqual(e.snapshot(),before);return r;};
 const receipt=(e,amount,fields={})=>ev(e,'recover',{amount,loanId:'opening',receiptId:'receipt'+e.history.length,settled:true,...fields});
 
+test('A31 amended waterfall separates F and H and rejects unrecorded amounts atomically',()=>{
+  const e=make({P:4,bankMoney:10});begin(e);
+  ok(ev(e,'impairFacility',{loanId:'opening',amount:4}));
+  ok(ev(e,'discharge',{loanId:'opening',amount:2,finalLegalResolution:true}));
+  const charges={loanId:'opening',chargeId:'c',contractRef:'synthetic-contract',contractualAmountsAttested:true,interest:2,penalties:1};
+  reject(e,'record_contractual_charges',{...charges,contractualAmountsAttested:false},'CONTRACT_REQUIRED');
+  ok(ev(e,'record_contractual_charges',charges));reject(e,'record_contractual_charges',charges,'CHARGE_ID');
+  const state=structuredClone(e.operating),snap=e.snapshot();
+  reject(e,'recover',{loanId:'opening',amount:8,settled:true,receiptId:'over'},'RECOVERY_OVERPAYMENT');assert.deepEqual(e.operating,state);
+  ok(receipt(e,5,{receiptId:'first'}));
+  assert.deepEqual(e.history.at(-1).detail,{principal:'2',residual:'2',lossRecoveryIncome:'4',interestIncome:'1',penaltyIncome:'0',F:'-4',H:'1'});
+  assert.equal(e.snapshot().R,'95');assert.equal(e.snapshot().exposure,'0');
+  assert.ok(q(e.snapshot().accounts.Authority.equity.value).eq(q(snap.accounts.Authority.equity.value).add(5)));
+  ok(receipt(e,2,{receiptId:'second'}));assert.equal(e.history.at(-1).detail.F,'0');assert.equal(e.history.at(-1).detail.H,'2');assert.equal(e.history.at(-1).detail.penaltyIncome,'1');
+  assert.equal(e.snapshot().R,'93');assert.equal(e.operating.recovered,'4');assert.equal(e.report().loanRegister.loans[0].contractualPenaltiesDue,'0');assert.equal(e.report().publications.filter(x=>x.kind==='cash-recovery').at(-1).H,'2');
+  const settled=structuredClone(e.operating);reject(e,'recover',{loanId:'opening',amount:2,settled:true,receiptId:'second'},'RECOVERY_RECEIPT');assert.deepEqual(e.operating,settled);
+  reject(e,'recover',{loanId:'opening',amount:1,settled:true,receiptId:'invented-penalty'},'RECOVERY_OVERPAYMENT');
+  reject(e,'payInterest',{amount:1},'IDENTIFIED_RECEIPT_REQUIRED');
+});
+
+test('A10 amended out-of-order finalization and numeric IDs cannot reopen earlier authorization',()=>{
+  const e=make();begin(e);ok(offer(e,'10',100,[]));ok(offer(e,'2',3,[]));ok(ev(e,'close_auction',{auctionId:'2'}));assert.equal(e.operating.window,null);
+  ok(ev(e,'close_auction',{auctionId:'10'}));assert.equal(e.operating.window.auctionId,'2');
+  reject(e,'direct_sale',{auctionId:'10',orderId:'bad',amount:1,paymentAccountHolderAttested:true},'DIRECT_WINDOW_CLOSED');
+  reject(e,'direct_sale',{auctionId:'2',orderId:'bad',amount:4,paymentAccountHolderAttested:true},'DIRECT_QUANTITY');
+  ok(ev(e,'direct_sale',{auctionId:'2',orderId:'good',amount:3,paymentAccountHolderAttested:true}));
+});
+
 test('A05-A07: exact uniform awards, marginal pro rata ties and provisional ceiling',()=>{
   const a=awardAuction(10,[{amount:8,rate:'.04'},{amount:6,rate:'.05'},{amount:100,rate:'.07'}]);
   assert.equal(a.awarded,'10');assert.equal(a.clearingRate,'1/20');assert.deepEqual(a.awards,[{bid:0,amount:'8'},{bid:1,amount:'2'}]);assert.deepEqual(a.excluded,[2]);
@@ -31,7 +59,25 @@ test('A09: second short enables eligibility, third requires review, full breaks 
   const s=run([false,false,false]);assert.equal(s[0].directWindowEligible,false);assert.equal(s[1].directWindowEligible,true);assert.equal(s[2].reviewRequired,true);
   assert.equal(run([false,true,false]).at(-1).directWindowEligible,false);
 });
-test('A10 unresolved authorization is explicit and cannot settle retail money',()=>{const e=make();begin(e);for(const id of ['a','b']){ok(offer(e,id));ok(ev(e,'close_auction',{auctionId:id}));}const r=reject(e,'direct_sale',{amount:1},'DIRECT_SALE_AUTHORIZATION_UNRESOLVED');assert.equal(r.status,'POLICY_UNDEFINED');});
+test('A10 amended direct windows reserve commitments and preserve original terms',()=>{
+  for(const bids of [[{amount:4,rate:'.05'}],[]]){
+    const e=make();begin(e);ok(offer(e,'old',20,[]));ok(ev(e,'close_auction',{auctionId:'old'}));
+    reject(e,'direct_sale',{auctionId:'old',orderId:'early',amount:1,paymentAccountHolderAttested:true},'DIRECT_WINDOW_CLOSED');
+    ok(offer(e,'latest',10,bids));ok(ev(e,'close_auction',{auctionId:'latest'}));
+    const room=bids.length?6:10,rate=bids.length?'1/20':'0.06';assert.equal(e.operating.window.rate,rate);
+    const order={auctionId:'latest',orderId:'o',amount:room,paymentAccountHolderAttested:true,settlementDate:'2027-01-04'};
+    reject(e,'direct_sale',{...order,amount:room+1},'DIRECT_QUANTITY');
+    ok(ev(e,'direct_sale',order));assert.equal(e.snapshot().B,'0');
+    const state=structuredClone(e.operating);reject(e,'direct_sale',{...order,orderId:'extra',amount:1},'DIRECT_QUANTITY');assert.deepEqual(e.operating,state);
+    ok(offer(e,'new',30,[]));reject(e,'direct_sale',{...order,orderId:'late',amount:1},'DIRECT_WINDOW_CLOSED');
+    reject(e,'settle_direct_sale',{auctionId:'latest',orderId:'o',amount:room},'SETTLEMENT_DATE');
+    ok(ev(e,'settle_direct_sale',{date:'2027-01-04',auctionId:'latest',orderId:'o',amount:room}));
+    assert.equal(e.bills['direct:o'].rate,rate);assert.equal(e.bills['direct:o'].maturity,'2027-03-01');
+    if(bids.length)ok(ev(e,'settle_auction',{auctionId:'latest',bid:0,amount:4}));
+    assert.equal(e.snapshot().B,'10');assert.equal(e.snapshot().R,'100');assert.equal(e.report().auctionCommitments.latest.retailSettled,String(room));
+    reject(e,'settle_direct_sale',{auctionId:'latest',orderId:'o',amount:1},'DIRECT_SETTLEMENT');
+  }
+});
 test('A11-A12: no buyers manufacture no B; discount form rejected; maturity still settles',()=>{
   const e=make({M:94,B:5});begin(e);ok(offer(e,'none',10,[{amount:10,rate:'.07'}]));ok(ev(e,'close_auction',{auctionId:'none'}));assert.equal(e.snapshot().B,'5');
   reject(e,'auction',{auctionId:'bad',amount:2,face:3,convention:'discount',maturity:'2027-03-01'},'BILL_FORM');
@@ -43,7 +89,7 @@ test('A13: par issue, separate Treasury interest and principal conserve R',()=>{
 test('A27: ordinary recovery reduces P and R, not income',()=>{const e=make({P:4,bankMoney:4});begin(e);const nw=e.snapshot().accounts.Authority.equity.value;ok(receipt(e,1));assert.equal(e.snapshot().P,'3');assert.equal(e.snapshot().R,'99');assert.equal(e.snapshot().accounts.Authority.equity.value,nw);assert.equal(e.history.at(-1).detail.F,'-1');});
 test('A28: impaired legal principal recovery recognizes prior loss exactly once',()=>{const e=make({P:4,bankMoney:4});begin(e);ok(ev(e,'impairFacility',{amount:4,loanId:'opening'}));const nw=q(e.snapshot().accounts.Authority.equity.value);ok(receipt(e,1));assert.equal(e.snapshot().P,'3');assert.equal(e.snapshot().U,'0');assert.ok(q(e.snapshot().accounts.Authority.equity.value).eq(nw.add(1)));assert.equal(e.snapshot().R,'99');assert.equal(e.history.at(-1).detail.lossRecoveryIncome,'1');});
 test('A29: residual recovery R104/P0/U4 becomes R103/P0/U3 with one income entry',()=>{const e=make({M:103,T:1,U:4,bankMoney:4,path:100});begin(e);assert.equal(e.snapshot().accounts.Authority.equity.value,'-104');ok(receipt(e,1,{loanId:'opening-residual'}));assert.equal(e.snapshot().R,'103');assert.equal(e.snapshot().U,'3');assert.equal(e.snapshot().accounts.Authority.equity.value,'-103');assert.equal(e.history.at(-1).detail.F,'-1');});
-test('A30-A31: legal discharge has F0; duplicate receipts and excess are rejected',()=>{const e=make({P:4,bankMoney:4});begin(e);ok(ev(e,'discharge',{loanId:'opening',amount:4,finalLegalResolution:true}));assert.equal(e.history.at(-1).detail.F,'0');assert.equal(e.snapshot().R,'100');ok(receipt(e,1,{receiptId:'unique'}));reject(e,'recover',{loanId:'opening',receiptId:'unique',settled:true,amount:1},'RECOVERY_RECEIPT');const r=reject(e,'recover',{loanId:'opening',receiptId:'over',settled:true,amount:4},'RECOVERY_EXCESS_UNRESOLVED');assert.equal(r.status,'POLICY_UNDEFINED');});
+test('A30-A31: legal discharge has F0; duplicate receipts and excess are rejected',()=>{const e=make({P:4,bankMoney:4});begin(e);ok(ev(e,'discharge',{loanId:'opening',amount:4,finalLegalResolution:true}));assert.equal(e.history.at(-1).detail.F,'0');assert.equal(e.snapshot().R,'100');ok(receipt(e,1,{receiptId:'unique'}));reject(e,'recover',{loanId:'opening',receiptId:'unique',settled:true,amount:1},'RECOVERY_RECEIPT');const r=reject(e,'recover',{loanId:'opening',receiptId:'over',settled:true,amount:4},'RECOVERY_OVERPAYMENT');assert.equal(r.status,'FAIL');});
 test('Loan-level impairment cannot be released against another loan',()=>{const e=make({P:1,bankMoney:1});begin(e);ok(ev(e,'draw',{loanId:'new',amount:1,maturity:'2027-02-01',eligibleCollateralAttested:true,stressTriggerAttested:true,penaltyRateAttested:true}));ok(ev(e,'impairFacility',{loanId:'opening',amount:1}));ok(receipt(e,1,{loanId:'new'}));assert.equal(e.history.at(-1).detail.lossRecoveryIncome,'0');assert.equal(e.report().loanRegister.P,'1');});
 test('A32: collateral possession is not recovery; net settled proceeds are reported',()=>{const e=make({P:4,bankMoney:4});begin(e);const R=e.snapshot().R;ok(ev(e,'collateral_possession',{loanId:'opening'}));assert.equal(e.snapshot().R,R);ok(ev(e,'collateral_sale',{loanId:'opening',gross:2,costs:'.5',amount:'1.5',settled:true,receiptId:'sale'}));assert.equal(e.snapshot().R,'197/2');const r=e.report().publications.find(x=>x.kind==='cash-recovery');assert.equal(r.gross,'2');assert.equal(r.expenses,'1/2');assert.equal(r.net,'3/2');});
 test('A33: recovery income cannot bypass zero issuance allowance',()=>{const e=make({U:4,bankMoney:4});begin(e);ok(receipt(e,1,{loanId:'opening-residual'}));reject(e,'issue',{amount:1,remittance:1},'ISSUANCE_ALLOWANCE');});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "WORK_IN_PROGRESS_NOT_FROZEN",
+  "status": "FROZEN_FOR_INDEPENDENT_CHALLENGE",
   "cases": [
     {
       "id": "A01",
@@ -76,11 +76,11 @@
     },
     {
       "id": "A10",
-      "status": "POLICY_UNDEFINED",
+      "status": "PASS",
       "tests": [
-        "A10 unresolved"
+        "A10 amended"
       ],
-      "note": "Author decision pending: remaining and overlapping direct-sale authorization."
+      "note": "Author-approved latest-window limit, binding reservations, original settlement terms, known/absent clearing rates and atomic excess rejection."
     },
     {
       "id": "A11",
@@ -244,11 +244,12 @@
     },
     {
       "id": "A31",
-      "status": "POLICY_UNDEFINED",
+      "status": "PASS",
       "tests": [
+        "A31 amended",
         "A30-A31:"
       ],
-      "note": "Principal-only and duplicate receipt checks pass; excess waterfall awaits author decision."
+      "note": "Recorded contractual interest and penalties enter H once; principal/residual only enter F; excess and duplicate receipts rejected atomically."
     },
     {
       "id": "A32",
