@@ -1,0 +1,7 @@
+{
+  "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/interest_expense?filter=record_date:eq:2026-09-30&page[size]=10000",
+  "retrievedOn": "2026-11-02",
+  "rows": 38,
+  "observationDate": "2026-09-30",
+  "sha256": "92ae27983b86153aec33fafb52e0a857bcaf5a752e8450a5d59fe4b500dc2f57"
+}

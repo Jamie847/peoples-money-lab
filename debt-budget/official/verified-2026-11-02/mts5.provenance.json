@@ -1,0 +1,7 @@
+{
+  "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_5?filter=record_date:eq:2026-09-30&page[size]=10000",
+  "retrievedOn": "2026-11-02",
+  "rows": 811,
+  "observationDate": "2026-09-30",
+  "sha256": "f4f6246300d5d53c465bc53858a8a8049771d652228122dd344f6483853c3f5a"
+}

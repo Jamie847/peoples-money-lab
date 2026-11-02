@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "debt-budget-0.3-36e618f4b253753a",
+  "releaseDigest": "36e618f4b253753a57324f06333e11041fbd270212b0c8bf115050dc2ce4ddcb",
+  "releaseDate": "2026-11-02",
+  "implementationBase": "8cdf3e28f932963b854d0b3b92cc4c623e72a34a",
+  "visibility": "PUBLIC_DRAFT_RESEARCH",
+  "inputs": {
+    "REPORT-0.3.md": "a6ed449ffc810ebf9d854da6e9248682e7745ec102f4e2cabb7c7bc0a164bc3e",
+    "settlement.mjs": "27e532fcd17fed94f5ed144bdc9ffb9f79c48b1945055a793ef68d06065d603b",
+    "settlement.test.mjs": "90b2b97a78fe4ecf203f4b73e78e5ada74456d68dbc1da3d83a23fac9e4107fe",
+    "followups.mjs": "8b1a46120f34712d0b4bbbbcdb5e38863ed176bef3ab908dd35e2a6447de9227",
+    "followups.test.mjs": "52cd9845193d27d07a0e70e50ede03173b59021134e48448b07f220ac9e02cf6",
+    "official-reconciliation.mjs": "9e5ac8666c9451f5eae4a24b287a3725111ba616f0248f5198f1be802672db0b",
+    "official-reconciliation.test.mjs": "b42b2f48a1e395cc7b3c3af8bfbd07066acb5d9ba07401e4a5ba54087de364af",
+    "official/verified-2026-11-02/debt_to_penny.json": "29dfe77ec8d025edf66f01733299d0e1a4c8f875ccb23b6c6e3d16c1933f0385",
+    "official/verified-2026-11-02/debt_to_penny.provenance.json": "ce710d283c53266ba65a1c8149eef410bc8fd7a7c76368e816236dff3e581c0c",
+    "official/verified-2026-11-02/interest_expense.json": "92ae27983b86153aec33fafb52e0a857bcaf5a752e8450a5d59fe4b500dc2f57",
+    "official/verified-2026-11-02/interest_expense.provenance.json": "679fd3286ad8d6ee7fa965d273ad2b690bb5d24a046bfc77a63a86c5b66d0ba4",
+    "official/verified-2026-11-02/mspd1.json": "8eb0b023eb86e70d37f765ae3c2fa9da79183b9114e4765c8de586c0f5edf5cf",
+    "official/verified-2026-11-02/mspd1.provenance.json": "0349222f9f5f1ad275e32a7a5917933f5aaf08d0b9467c505e3ce2c562aae647",
+    "official/verified-2026-11-02/mts5.json": "f4f6246300d5d53c465bc53858a8a8049771d652228122dd344f6483853c3f5a",
+    "official/verified-2026-11-02/mts5.provenance.json": "a2b60324486cec40480528caa606c327ae6429d2ed8d6e6937cd6c43d04f7f66",
+    "official/verified-2026-11-02/mts6.json": "70a2c11cc394150ed989c75e0690c235c945740412021432d8a4f1057e86347f",
+    "official/verified-2026-11-02/mts6.provenance.json": "be9edbc129fe236815480a9f50123ef205f410360e018334b562cf615893b8c0",
+    "official/verified-2026-11-02/mts9.json": "1dc95cf7291642a73a8fda515d1637791619d45e7ea5b8d35a7bcc17bd3b8cfd",
+    "official/verified-2026-11-02/mts9.provenance.json": "43b9db70738641c749a59e4b1d6910dc3e1a3897b4c986d2fb58d50e126ef2c8",
+    "SCOPE.md": "64326efcef427d940ba980d58d7497ccc6a94af919c813e44d6d901a34e462d3",
+    "README.md": "28b613f3320139add67d1f75f475dffd0b1f94c772fdada9567647b42b02abb9",
+    "model.mjs": "6efbd971ed8eed04942fa51eada8b53103404610fd6237a35c09d10b46f1eb71",
+    "model.test.mjs": "6668417a4cab58f933725643347df95d634c76c0b61f96d2b6c8197c2e576088",
+    "scenarios.mjs": "02e9ae660902eb623ed3e063e4b982f29eea53e666f5071c9f32b42ef136b8d4",
+    "sources.json": "a6eac4627ed6a9d417195dcae7e8faa7c9626b729d74c940a0030ad06c22fa87",
+    "reproduce.mjs": "65988ee919d820a8f97b2e51063efc0cd0dfcd82c5edb9a84d0d67ec822ec628",
+    "release.test.mjs": "85ff6e03818a5b26d0799bc4b6c99c686d1598f6a1f2ae909fdfc4bd623eba71",
+    "../src/rational.mjs": "e35e23d599ddc6e6a7a4ce4f412baeded2d43c5803fe0704a5158dac4ce14a6e",
+    "historical.mjs": "cd3656a8e8c33599cb86cbd7da89fbb4cfd928665352190bd28f184c4e3329cf",
+    "official/historical-snapshot.json": "4ed67f0edf89216be373875e42627e3002a0da9378a70ba8593d293cfd9c176c",
+    "check.mjs": "649030cc064fe6a5f0ed3b909ff973f9de02f32c2b5d0f2e89008309811453c9",
+    "controller-coupling.mjs": "711656884fa4cd2cb92772fd80f52347c4bf737b65250b41f70ad51058805cc3",
+    "coupling.test.mjs": "f1172af7dca24e04d928703fbb84d532f3203537d16dda53d4856721b9dd2750",
+    "../src/auction072.mjs": "61a21c3ada35aa9b7d3c3fa43c756d4038fecc18bdecd3cf5dc959f75bf8c61e",
+    "../src/calendar.mjs": "6245ce71fb5b9d29b35aa03f7f1cc174c0ea49af94c2c36092fb54be4003a305",
+    "../src/counterexample.mjs": "156e75e2a43f408b6f44d52b8813d05a6c5682e344c680c9133866e3a42dad7f",
+    "../src/data072.mjs": "6ee30b009f30d5d30acb671725fab2b07123877fe94b30349a4a80a67830f4dd",
+    "../src/engine.mjs": "bba26e3d857898557375ae1e0fcab70fb2150b190ba255ea8ea564b9c117d27a",
+    "../src/engine072.mjs": "347a12646dc9db6ff4f409edc300d378b4dd13000ffb251b0aeecc202cd6be30",
+    "../src/ledger.mjs": "e3ce4d1d9bc7958bdd359a8373fa95069f88c77cef8ac59812f3a7cf175fd245",
+    "../src/policy.mjs": "5c6d4e1df7be62c17c3d3476810459d11a2b09c3eea4642f6fe259db2845ea0b",
+    "../src/rules.mjs": "28de7caf44f03ebdc7dd2b6981026872add0d68bb6db9f46d3118b52a3206176",
+    "../src/scenarios.mjs": "0799c46272fb86fac16f65aef2ebf11f26ef2401dc76a305c0c9d1db4fffad91",
+    "../src/stress.mjs": "dc1fc86ab642469d2c33bd4f8ffd45eebfc61f5bde52ebd5e6eab983ca7f2934",
+    "../src/vintages072.mjs": "99570e47302d8c99a59e47ff68dce905b38ce94223d18df93a8531c2095c1fda",
+    "../config/policy-0.7.1.json": "61185f9e0c26501bbc9365660de60618f9b795e026b05276e6bb98763a913787",
+    "../config/policy-0.7.2.json": "9a2958a0e3ffcdaee7a70dea6da812bb4479dd4805bcd0dbcbc10e6a7a7e6ce0",
+    "../fixtures/federal-calendar-2027.json": "41fea94f99b64c4e7fb9515c5a38d42d4543a39d4384a4cf7bd7f2ae5fb476fe"
+  },
+  "sourceDates": [
+    {
+      "id": "debt-perimeter",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "mspd",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "mts",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "h41-20261001",
+      "released": "2026-10-01",
+      "asOf": "2026-09-30",
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "ssa-investments",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "cash-budget-bridge",
+      "released": null,
+      "asOf": "2024-09-30",
+      "retrieved": "2026-11-01"
+    }
+  ],
+  "nationalReconciliation": {
+    "status": "BLOCKED",
+    "gaps": [
+      "MISSING_grossTreasury",
+      "MISSING_debtHeldByPublic",
+      "MISSING_intragovernmental",
+      "MISSING_authorityTreasuries",
+      "MISSING_socialSecurity",
+      "MISSING_treasuryCash",
+      "MISSING_conversionBase",
+      "DATE_MISMATCH",
+      "INSTRUMENT_AND_COUNTERPART_BRIDGE_REQUIRED"
+    ],
+    "nationalScenarioPermitted": false
+  },
+  "classification": "Synthetic accounting diagnostics, not unseen challenge or economic validation",
+  "files": {
+    "official-reconciliation.json": "52585977b52349cb37a8fd4ec8fb98e9288aed73f5323df4ee68288847b74f21",
+    "settlement-example.json": "e77d24a7edefa3252691da3354b1d27e3761523a506ee1a1cceddb2a07a5a521",
+    "historical-checks.json": "18dbb3abc27bedbc74532fed48cb280c21a0113ef77efe4315247ec48ed16f61",
+    "results.json": "554bccd68baea33abd56032a50be188270d8906c4469a5b550b957df08c1894f",
+    "sources.json": "a6eac4627ed6a9d417195dcae7e8faa7c9626b729d74c940a0030ad06c22fa87",
+    "summary.csv": "6244860e34a7e0eee1ce70ddc944fc0f0e4aa1e009103f08287d7cb2de63bc63",
+    "journals.csv": "53dc90a53f0a265c2d2b153cf7db3b52386c4de2645e4c0e45875957e51fa6ef",
+    "REPORT.md": "3df1e10184b25ede68d833f7339a67541dd668b1b6b6942c20c6b499cc911bf0"
+  }
+}

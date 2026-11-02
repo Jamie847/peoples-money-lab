@@ -1,0 +1,104 @@
+{
+  "classification": "Official historical observations; not synthetic or a forecast",
+  "observationDate": "2026-09-30",
+  "retrievedOn": "2026-11-02",
+  "units": "USD; MSPD million-USD fields multiplied by 1000000",
+  "sources": {
+    "debt_to_penny": {
+      "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?filter=record_date:eq:2026-09-30&page[size]=10000",
+      "retrievedOn": "2026-11-02",
+      "rows": 1,
+      "observationDate": "2026-09-30",
+      "sha256": "29dfe77ec8d025edf66f01733299d0e1a4c8f875ccb23b6c6e3d16c1933f0385"
+    },
+    "mts9": {
+      "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_9?filter=record_date:eq:2026-09-30&page[size]=10000",
+      "retrievedOn": "2026-11-02",
+      "rows": 33,
+      "observationDate": "2026-09-30",
+      "sha256": "1dc95cf7291642a73a8fda515d1637791619d45e7ea5b8d35a7bcc17bd3b8cfd"
+    },
+    "mts6": {
+      "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_6?filter=record_date:eq:2026-09-30&page[size]=10000",
+      "retrievedOn": "2026-11-02",
+      "rows": 49,
+      "observationDate": "2026-09-30",
+      "sha256": "70a2c11cc394150ed989c75e0690c235c945740412021432d8a4f1057e86347f"
+    },
+    "mts5": {
+      "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_5?filter=record_date:eq:2026-09-30&page[size]=10000",
+      "retrievedOn": "2026-11-02",
+      "rows": 811,
+      "observationDate": "2026-09-30",
+      "sha256": "f4f6246300d5d53c465bc53858a8a8049771d652228122dd344f6483853c3f5a"
+    },
+    "interest_expense": {
+      "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/interest_expense?filter=record_date:eq:2026-09-30&page[size]=10000",
+      "retrievedOn": "2026-11-02",
+      "rows": 38,
+      "observationDate": "2026-09-30",
+      "sha256": "92ae27983b86153aec33fafb52e0a857bcaf5a752e8450a5d59fe4b500dc2f57"
+    },
+    "mspd1": {
+      "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/debt/mspd/mspd_table_1?filter=record_date:eq:2026-09-30&page[size]=10000",
+      "retrievedOn": "2026-11-02",
+      "rows": 14,
+      "observationDate": "2026-09-30",
+      "sha256": "8eb0b023eb86e70d37f765ae3c2fa9da79183b9114e4765c8de586c0f5edf5cf"
+    }
+  },
+  "claims": {
+    "grossDebt": "4017182510134031/100",
+    "publicDebt": "3242501254639057/100",
+    "intragovernmentalDebt": "387340627747487/50",
+    "receipts": "540332675896081/100",
+    "netOutlays": "739579998331323/100",
+    "netInterest": "105175396931111/100",
+    "primaryNetOutlays": "158601150350053/25",
+    "deficit": "99623661217621/50",
+    "publicIssueInterest": "53423213383079/50",
+    "specialIssueInterest": "14574449287763/50",
+    "grossInterest": "33998831335421/25",
+    "restoration": "44361294917/100",
+    "accruedInterestPayableChange": "1050213700369/50"
+  },
+  "identities": {
+    "debtSplit": true,
+    "financing": true,
+    "grossInterest": true,
+    "publicIssueSeries": true,
+    "governmentSeriesLessRestoration": true
+  },
+  "residuals": {
+    "mspdMinusDtp": {
+      "gross": "528719/100",
+      "public": "-2950027/100",
+      "intragovernmental": "3478749/100"
+    },
+    "expenseApiMinusMtsGross": "44361294917/100"
+  },
+  "selectors": {
+    "mts9": "line_code_nbr 120 receipts, 340 net outlays, 320 net interest",
+    "mts6": "9361 liabilities minus 9562 assets plus 9624 adjustment; 9320 accrued interest payable",
+    "mts5": "4170 public accrual, 4175 special cash, 4176 gross; exclude duplicate total 4177",
+    "mspd1": "security_type_desc = Total Public Debt Outstanding; do not sum subtotal rows",
+    "interest_expense": "sum unique published component rows by expense_catg_desc; separately identify Restoration of Interest"
+  },
+  "basis": "MTS Table 5 explicitly labels public issues Accrual Basis and special issues Cash Basis. Net budget interest is not a pure cash coupon flow.",
+  "nationalCashBridge": {
+    "status": "BLOCKED",
+    "reasons": [
+      "Gross-to-net interest offsets and full accrual-to-cash bridge are not reconciled. The accrued-interest-payable change alone is insufficient.",
+      "MSPD/DTP exact residual remains unexplained; matching rounded millions is not proof of its cause. DTP controls historical debt stocks.",
+      "Restoration event is supported by Treasury FY2025 AFR Note 16, printed page 111; precise MTS classification/exclusion rationale remains unresolved. It is not a saving.",
+      "Authority security valuation, opening cash, conversion base and contractual maturity schedules are not reconciled. No national execution is authorized by these identities."
+    ]
+  },
+  "supplementarySource": {
+    "url": "https://home.treasury.gov/system/files/266/Treasury-FY-2025-AFR.pdf",
+    "locator": "Note 16, printed page 111",
+    "reviewedOn": "2026-11-02",
+    "method": "Official PDF web text reviewed; raw PDF not packaged",
+    "claim": "Approximately $444 million of foregone interest restored to OPM funds December 31, 2025 after extraordinary measures."
+  }
+}

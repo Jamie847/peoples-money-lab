@@ -52,3 +52,21 @@ A distinct scenario uses the unchanged frozen OperatingEngine, independently spe
 | DB17 | Allocations above allowance reject; unavailable first price data blocks coupling. |
 | DB18 | Fiscal ledger consumes exactly the computed allocation once; records allowance and allocation separately. |
 | DB19 | Inherited scenarios are labeled assumed-authorized issuance; the ban case's rejected 15 principal stays outstanding and overdue. |
+
+## Version 0.3 addendum: paired settlement and post-disclosure follow-ups
+
+Preserve releases0.1/0.2 and the frozen controller. Add explicit fiscal-to-controller mappings for external debt, public money, cash, Bills and conversion. Atomic rejection must restore both financial states and auction registers. Policy failures on applied settlements remain visible. Internal-holder settlements, remittances and C11 semantics are outside this mapping. Bill bids and cash coupons are separate explicit inputs, not an inferred market contract.
+
+| ID | Acceptance assertion |
+|---|---|
+| DB20 | Fiscal settlements match controller M/B/T/R, Bank/External money, conversion and external debt; allowance and allocation remain distinct. |
+| DB21 | Compound controller rejection rolls back both ledgers and auction registers. |
+| DB22 | Fiscal cash failure and unsupported holder routes reject without mutation. |
+| DB23 | Original timing's monthly-tranche and Treasury-cash violations remain FAIL despite balanced books. |
+| DB24 | Zero-allowance full quarter with same-day tax/spend passes. |
+| DB25 | Verify archived primary bytes, complete selected-date coverage and exact debt/financing/interest identities. |
+| DB26 | Preserve exact stock and interest residuals; mixed-basis national cash bridge stays BLOCKED. |
+| FOLLOWUP C05 | Explicitly authorized actual-balance formula resolves at effective boundary after settled recovery; invalid formula/residual cannot mutate. New wrapper around frozen numeric reset interface. |
+| FOLLOWUP C06 | State starting path600/R500, allow catch-up above4% of R while annualized path growth stays4%; reject path500-to600 jump. |
+
+The follow-ups are post-disclosure, not a new unseen challenge. Original first-run and harness-correction provenance remain unchanged. Historical observations are official dated data; all model scenarios remain synthetic. Selected historical identities cannot authorize national execution.
