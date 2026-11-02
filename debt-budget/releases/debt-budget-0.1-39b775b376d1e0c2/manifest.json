@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "debt-budget-0.1-39b775b376d1e0c2",
+  "releaseDigest": "39b775b376d1e0c2b0630dbf437f1ec452a9cea82fba61b501abdf71322020e7",
+  "releaseDate": "2026-11-01",
+  "implementationBase": "8cdf3e28f932963b854d0b3b92cc4c623e72a34a",
+  "visibility": "PRIVATE_LOCAL_REVIEW",
+  "inputs": {
+    "SCOPE.md": "bc376dc79b1f558e91dfbab8cf719544664efa65fa7e22e3ead2237f5fa82633",
+    "README.md": "4d1e2e9177be394a72b527001a5e4c88c282542bd10f58b74c523abdd60f144d",
+    "model.mjs": "56777b989a5a50f15e0ed441e8f979cceda9da0256581584f5037e20497a4df9",
+    "model.test.mjs": "32a86cc233a5d68894183822b06e3fabc5da21f4899930ab26d42d159948cae2",
+    "scenarios.mjs": "d46956b366debc2d67a768d16030921fadf638787e112c6aac6afb58029ff537",
+    "sources.json": "a6eac4627ed6a9d417195dcae7e8faa7c9626b729d74c940a0030ad06c22fa87",
+    "reproduce.mjs": "64a6d13712be71558e7f81d3a0e9a98456acb6097f61d9f74173480ec3421dca",
+    "release.test.mjs": "9c963cad8f7e99b1c0bb61a10c93fdba658a83152389d346046fd4d8a7cff722",
+    "../src/rational.mjs": "e35e23d599ddc6e6a7a4ce4f412baeded2d43c5803fe0704a5158dac4ce14a6e",
+    "historical.mjs": "1a27164cf5a592cdf39e4b7ce90010e73b845207a019bd9f812938d8e4f5e191",
+    "official/historical-snapshot.json": "d6ed2e885d3cc13b638c0da9a4ee09a58a76d594afc2e85b3c3fc725a927929e",
+    "check.mjs": "b63489e5c82f2b65ccd2644ee89888e70f176e46f293fee5fc34d922ad38f74b"
+  },
+  "sourceDates": [
+    {
+      "id": "debt-perimeter",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "mspd",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "mts",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "h41-20261001",
+      "released": "2026-10-01",
+      "asOf": "2026-09-30",
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "ssa-investments",
+      "released": null,
+      "asOf": null,
+      "retrieved": "2026-11-01"
+    },
+    {
+      "id": "cash-budget-bridge",
+      "released": null,
+      "asOf": "2024-09-30",
+      "retrieved": "2026-11-01"
+    }
+  ],
+  "nationalReconciliation": {
+    "status": "BLOCKED",
+    "gaps": [
+      "MISSING_grossTreasury",
+      "MISSING_debtHeldByPublic",
+      "MISSING_intragovernmental",
+      "MISSING_authorityTreasuries",
+      "MISSING_socialSecurity",
+      "MISSING_treasuryCash",
+      "MISSING_conversionBase",
+      "DATE_MISMATCH",
+      "INSTRUMENT_AND_COUNTERPART_BRIDGE_REQUIRED"
+    ],
+    "nationalScenarioPermitted": false
+  },
+  "classification": "Synthetic accounting diagnostics, not unseen challenge or economic validation",
+  "files": {
+    "historical-checks.json": "de6047d51080761292cf1ce4b03668201007236a93b1fd98d294239136dc892b",
+    "results.json": "d0883d796acd73bf49c6d13b048512664f18728001f59b778c67cc1b20f46f34",
+    "sources.json": "a6eac4627ed6a9d417195dcae7e8faa7c9626b729d74c940a0030ad06c22fa87",
+    "summary.csv": "7b2d1b3e0a8a269bc2afb97f32e31c96b7f21419076bbf403734ffff292b3b34",
+    "journals.csv": "b5dfdccb19b7c84f2aeb386c36ca1538af2ff28b672a7c3a4214a93c44eda8f1",
+    "REPORT.md": "254014fb35dc4c03885a256e86ccd930da7a7b3bf9cbf251c4edbcbcf6a3bf03"
+  }
+}

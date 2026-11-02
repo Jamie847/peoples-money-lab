@@ -1,0 +1,7 @@
+{
+  "sourceUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?filter=record_date:eq:2026-09-30&page[size]=10000",
+  "retrievedOn": "2026-11-02",
+  "rows": 1,
+  "observationDate": "2026-09-30",
+  "sha256": "29dfe77ec8d025edf66f01733299d0e1a4c8f875ccb23b6c6e3d16c1933f0385"
+}
