@@ -37,6 +37,7 @@ Ordinary issuance fills a measured quarterly shortfall to a nondecreasing path. 
 
 ## Explore
 
+- [Public evidence index](evidence/README.md): the 20-case operating-rule challenge, original and corrected adapters/results, chronology, disclosed redaction, and separately labelled follow-ups.
 - [`src/engine.mjs`](src/engine.mjs): dated events, admission checks, policy diagnostics and journals.
 - [`src/ledger.mjs`](src/ledger.mjs): four-sector accounts and explicit counterpart entries.
 - [`src/rational.mjs`](src/rational.mjs): exact rational transaction amounts.

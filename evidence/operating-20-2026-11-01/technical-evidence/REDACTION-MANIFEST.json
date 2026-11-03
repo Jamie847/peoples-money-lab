@@ -1,0 +1,134 @@
+[
+  {
+    "file": "private_evaluation/corrected-run.sha256",
+    "original_sha256": "ed766a1da0bb072b2ee16356febd51b3679bd9af6d282f4bd99c3af2970f33f1",
+    "distributed_sha256": "ed766a1da0bb072b2ee16356febd51b3679bd9af6d282f4bd99c3af2970f33f1",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/final-adapter-pre-run.sha256",
+    "original_sha256": "c25371412b8804f2c67918d917fc6b6b24436a1735992bc0e73069e774c428bf",
+    "distributed_sha256": "c25371412b8804f2c67918d917fc6b6b24436a1735992bc0e73069e774c428bf",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/lineage-adapter-pre-run.sha256",
+    "original_sha256": "0cd25f31c06028aa5d93e0c4b34d6fd7c34944fa0e4783bd37f2b93e6e5ea84c",
+    "distributed_sha256": "0cd25f31c06028aa5d93e0c4b34d6fd7c34944fa0e4783bd37f2b93e6e5ea84c",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/final-adapter-run.stdout",
+    "original_sha256": "800ee97756e5830a980aa81791a3b8aa9107c18dbe0c1715728a52e06de05093",
+    "distributed_sha256": "800ee97756e5830a980aa81791a3b8aa9107c18dbe0c1715728a52e06de05093",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/first-run.json",
+    "original_sha256": "b0db4fb86b8c91688b2c47c9c3f64353448910d5fad931bc6bef715647421b2f",
+    "distributed_sha256": "036cb21b3fe58acdafe41fc04a7a72e163d83ccac71fb24199689a106bd260e0",
+    "redaction": "workspace path in stack trace"
+  },
+  {
+    "file": "private_evaluation/lineage-supplement.stdout",
+    "original_sha256": "77e9b8b7d7d39885c4257fb3144cca91b8a275eeb7803104efb08a4766ef2cc8",
+    "distributed_sha256": "77e9b8b7d7d39885c4257fb3144cca91b8a275eeb7803104efb08a4766ef2cc8",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/run-final-adapter.mjs",
+    "original_sha256": "ef952abdf20d86e014763c41ac26596087d65e8eed4e0d1c160c5745220cac53",
+    "distributed_sha256": "ef952abdf20d86e014763c41ac26596087d65e8eed4e0d1c160c5745220cac53",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/run-corrected.mjs",
+    "original_sha256": "c65f28fdb4ad03c988fea29911dcf60adc83f0d623b5acf47bfed8e5cf9715c5",
+    "distributed_sha256": "c65f28fdb4ad03c988fea29911dcf60adc83f0d623b5acf47bfed8e5cf9715c5",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/lineage-supplement.json",
+    "original_sha256": "baf37ce09fcaf6b19219b4499d2db805d9db2be071400152d56cd21aff49e70f",
+    "distributed_sha256": "baf37ce09fcaf6b19219b4499d2db805d9db2be071400152d56cd21aff49e70f",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/run.mjs",
+    "original_sha256": "d6d73c1524e020aeb14f8a3361ddff7573b5e88497da862292a45d7d3ba44781",
+    "distributed_sha256": "d6d73c1524e020aeb14f8a3361ddff7573b5e88497da862292a45d7d3ba44781",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/corrected-run.stdout",
+    "original_sha256": "b697acbec031a0f32f5a794b6e6445c6bece77fe11df57cc6024807514c6fcc0",
+    "distributed_sha256": "b697acbec031a0f32f5a794b6e6445c6bece77fe11df57cc6024807514c6fcc0",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/lineage-supplement.sha256",
+    "original_sha256": "c40a49588a01e6694f38ebf244ff2fcfa65fc05d7e534b2cd6ef267bd8a949d6",
+    "distributed_sha256": "c40a49588a01e6694f38ebf244ff2fcfa65fc05d7e534b2cd6ef267bd8a949d6",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/report.sha256",
+    "original_sha256": "ee4776a720b785074ceb2b93b9dc472a6e6b9a78b7a9e5f1aeb3612e5d53bca0",
+    "distributed_sha256": "ee4776a720b785074ceb2b93b9dc472a6e6b9a78b7a9e5f1aeb3612e5d53bca0",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/corrected-adapter-pre-run.sha256",
+    "original_sha256": "544fbe066dc7efc9325e6b416e5594d0fe7e66dbb46a5779380c17cf6ab14a1c",
+    "distributed_sha256": "544fbe066dc7efc9325e6b416e5594d0fe7e66dbb46a5779380c17cf6ab14a1c",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/first-run.sha256",
+    "original_sha256": "3027665a04114ebee2988ab3506d999a924f7dbbacb684d5617bc460596c65e8",
+    "distributed_sha256": "3027665a04114ebee2988ab3506d999a924f7dbbacb684d5617bc460596c65e8",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/run-lineage-supplement.mjs",
+    "original_sha256": "0b770433d48f6babbb78bdce7596b36fd2dc21a3651a3243e4c4591b0eb8a5a7",
+    "distributed_sha256": "0b770433d48f6babbb78bdce7596b36fd2dc21a3651a3243e4c4591b0eb8a5a7",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/final-adapter-run.sha256",
+    "original_sha256": "2c4a2d51abeec8c024aa69f64965d5a773d04bdf1445e8d2203ba4ef62c4b291",
+    "distributed_sha256": "2c4a2d51abeec8c024aa69f64965d5a773d04bdf1445e8d2203ba4ef62c4b291",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/corrected-run.json",
+    "original_sha256": "bdb73632737280f32c74a15a60a47c53a75b93b7df25b2b2d2881a5bffe0d940",
+    "distributed_sha256": "bdb73632737280f32c74a15a60a47c53a75b93b7df25b2b2d2881a5bffe0d940",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/first-run.stdout",
+    "original_sha256": "0133f913d5e478a46103212b78c211a577b456d103c41c09232af0587803f774",
+    "distributed_sha256": "0133f913d5e478a46103212b78c211a577b456d103c41c09232af0587803f774",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/final-adapter-run.json",
+    "original_sha256": "a3707203e3b9cb6f6a1d99d67608f1c2c7d2da67f056c7615fe80e5477c4851c",
+    "distributed_sha256": "a3707203e3b9cb6f6a1d99d67608f1c2c7d2da67f056c7615fe80e5477c4851c",
+    "redaction": null
+  },
+  {
+    "file": "private_evaluation/adapter-pre-run.sha256",
+    "original_sha256": "5206b5d275cf077180cec819370630f5efe62f41e552bb99230179c361c41ae1",
+    "distributed_sha256": "5206b5d275cf077180cec819370630f5efe62f41e552bb99230179c361c41ae1",
+    "redaction": null
+  },
+  {
+    "file": "private_challenge/challenges.json",
+    "original_sha256": "7460abe7abb0a376b140a0690346b3d1950b7238d8895dbb1939b56a4f46fbe0",
+    "distributed_sha256": "7460abe7abb0a376b140a0690346b3d1950b7238d8895dbb1939b56a4f46fbe0",
+    "redaction": null
+  }
+]
