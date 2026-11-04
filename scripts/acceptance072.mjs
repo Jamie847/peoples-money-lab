@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const map=JSON.parse(fs.readFileSync(path.join(root,'acceptance/0.7.2/coverage.json'),'utf8'));
+if(map.cases.length!==48||new Set(map.cases.map(x=>x.id)).size!==48)throw Error('Exactly A01-A48 must be mapped');
+for(let i=1;i<=48;i++)if(!map.cases.some(x=>x.id===`A${String(i).padStart(2,'0')}`))throw Error('Missing case');
+const files=['test/operating072.test.mjs','test/vintages-scheduling072.test.mjs','test/acceptance-coverage072.test.mjs'];
+const run=spawnSync(process.execPath,['--test','--test-reporter=tap',...files],{cwd:root,encoding:'utf8'});
+const passed=[...run.stdout.matchAll(/^ok \d+ - (.+)$/gm)].map(x=>x[1]);
+const results=map.cases.map(c=>{const evidence=c.tests.map(prefix=>({prefix,matches:passed.filter(name=>name.startsWith(prefix))}));return {...c,status:evidence.some(x=>!x.matches.length)?'FAIL':c.status,evidence};});
+const counts={};for(const c of results)counts[c.status]=(counts[c.status]??0)+1;
+const output={schemaVersion:1,implementation:map.status,kind:'visible acceptance coverage; not held-out evidence',counts,cases:results};
+const out=path.join(root,'reports-072');fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'acceptance-results.json'),JSON.stringify(output,null,2)+'\n');
+const lines=['# A01-A48 visible acceptance coverage','', 'Frozen for an independent challenge; these visible cases are not held-out evaluation. PASS is limited to the listed visible assertions, not economic validation. Unresolved or unsupported paths remain explicit.','', '| Case | Status | Evidence / limitation |','| --- | --- | --- |',...results.map(c=>`| ${c.id} | ${c.status} | ${c.note} Tests: ${c.tests.map(x=>'`'+x+'`').join(', ')} |`),'',`Counts: ${Object.entries(counts).map(([k,v])=>k+' '+v).join('; ')}.`,'','Regenerate with `npm run acceptance:072`. Machine-readable results are generated in `reports-072/acceptance-results.json`. The frozen SPECIFICATION.md and its hash are unchanged.',''];
+const generated=lines.join('\n');fs.writeFileSync(path.join(out,'TRACEABILITY.md'),generated);
+if(process.argv.includes('--update-map'))fs.writeFileSync(path.join(root,'acceptance/0.7.2/TRACEABILITY.md'),generated);
+console.log(JSON.stringify({counts,testsPassed:passed.length,status:run.status===0&&!counts.FAIL?'VISIBLE_CHECKS_EXECUTED':'FAIL',implementation:map.status},null,2));
+if(run.status!==0||counts.FAIL){console.error(run.stdout,run.stderr);process.exitCode=1;}

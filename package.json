@@ -8,7 +8,9 @@
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "reproduce": "node scripts/reproduce.mjs",
-    "check": "npm test && npm run reproduce"
+    "reproduce:072": "node scripts/reproduce072.mjs",
+    "acceptance:072": "node scripts/acceptance072.mjs",
+    "check": "npm test && npm run reproduce && npm run reproduce:072 && npm run acceptance:072"
   },
   "license": "MIT"
 }

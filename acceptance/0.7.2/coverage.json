@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "status": "FROZEN_FOR_INDEPENDENT_CHALLENGE",
+  "cases": [
+    {
+      "id": "A01",
+      "status": "PASS",
+      "tests": [
+        "A01 exact"
+      ],
+      "note": "Exact emergency expiry and eight-quarter no-reset trace."
+    },
+    {
+      "id": "A02",
+      "status": "PASS",
+      "tests": [
+        "A02 proposed"
+      ],
+      "note": "Votes and impairment cannot cancel residual."
+    },
+    {
+      "id": "A03",
+      "status": "PASS",
+      "tests": [
+        "A03 denominator"
+      ],
+      "note": "Headroom restored by denominator growth; U unchanged."
+    },
+    {
+      "id": "A04",
+      "status": "PASS",
+      "tests": [
+        "A04,A26"
+      ],
+      "note": "Positive draw at zero headroom rejected."
+    },
+    {
+      "id": "A05",
+      "status": "PASS",
+      "tests": [
+        "A05-A07"
+      ],
+      "note": "8+2 awards and uniform coupon."
+    },
+    {
+      "id": "A06",
+      "status": "PASS",
+      "tests": [
+        "A05-A07"
+      ],
+      "note": "Equal marginal ties pro rata."
+    },
+    {
+      "id": "A07",
+      "status": "PASS",
+      "tests": [
+        "A05-A07"
+      ],
+      "note": "Above-ceiling bid excluded."
+    },
+    {
+      "id": "A08",
+      "status": "PASS",
+      "tests": [
+        "A08:"
+      ],
+      "note": "Awards and actual settlement separated; rejection atomic."
+    },
+    {
+      "id": "A09",
+      "status": "PASS",
+      "tests": [
+        "A09:"
+      ],
+      "note": "Consecutive short sequence and full-auction reset."
+    },
+    {
+      "id": "A10",
+      "status": "PASS",
+      "tests": [
+        "A10 amended"
+      ],
+      "note": "Author-approved latest-window limit, binding reservations, original settlement terms, known/absent clearing rates and atomic excess rejection."
+    },
+    {
+      "id": "A11",
+      "status": "PASS",
+      "tests": [
+        "A11-A12:"
+      ],
+      "note": "No phantom demand; principal maturity settles."
+    },
+    {
+      "id": "A12",
+      "status": "PASS",
+      "tests": [
+        "A11-A12:"
+      ],
+      "note": "Discount instrument rejected before posting."
+    },
+    {
+      "id": "A13",
+      "status": "PASS",
+      "tests": [
+        "A13:"
+      ],
+      "note": "Par issue, contractual-input interest and maturity separate."
+    },
+    {
+      "id": "A14",
+      "status": "PASS",
+      "tests": [
+        "A14,A16-A18:"
+      ],
+      "note": "Sixth business close opens remedy."
+    },
+    {
+      "id": "A15",
+      "status": "PASS",
+      "tests": [
+        "A15,A24:"
+      ],
+      "note": "Eleventh rolling breach triggers without consecutive violation."
+    },
+    {
+      "id": "A16",
+      "status": "PASS",
+      "tests": [
+        "A14,A16-A18:"
+      ],
+      "note": "Dividend moves T to M with zero issuance and no debt."
+    },
+    {
+      "id": "A17",
+      "status": "PASS",
+      "tests": [
+        "A14,A16-A18:"
+      ],
+      "note": "Day five on time; day six late; holiday and weekend crossed."
+    },
+    {
+      "id": "A18",
+      "status": "PASS",
+      "tests": [
+        "A14,A16-A18:"
+      ],
+      "note": "Open remedy retains deadline across later breaches."
+    },
+    {
+      "id": "A19",
+      "status": "PASS",
+      "tests": [
+        "A19-A20:"
+      ],
+      "note": "Live R99 makes total cure 1.03."
+    },
+    {
+      "id": "A20",
+      "status": "PASS",
+      "tests": [
+        "A19-A20:"
+      ],
+      "note": "Queue does not settle; partial credits reconcile."
+    },
+    {
+      "id": "A21",
+      "status": "PASS",
+      "tests": [
+        "A21-A22:"
+      ],
+      "note": "Quarter obligation keeps following-quarter deadline."
+    },
+    {
+      "id": "A22",
+      "status": "PASS",
+      "tests": [
+        "A21-A22:"
+      ],
+      "note": "Qualifying spending credited once against obligation."
+    },
+    {
+      "id": "A23",
+      "status": "PASS",
+      "tests": [
+        "A23 preventive"
+      ],
+      "note": "Quarter-end recreating deferral rejected at proposal and settlement; within-month schedule tested."
+    },
+    {
+      "id": "A24",
+      "status": "PASS",
+      "tests": [
+        "A15,A24:"
+      ],
+      "note": "New remedy opens under retained rolling history."
+    },
+    {
+      "id": "A25",
+      "status": "PASS",
+      "tests": [
+        "A25:"
+      ],
+      "note": "Only closing cash breaches count."
+    },
+    {
+      "id": "A26",
+      "status": "PASS",
+      "tests": [
+        "A04,A26"
+      ],
+      "note": "Cap enforced at attempted draw."
+    },
+    {
+      "id": "A27",
+      "status": "PASS",
+      "tests": [
+        "A27:"
+      ],
+      "note": "Unimpaired principal repayment produces F-1, no recovery income."
+    },
+    {
+      "id": "A28",
+      "status": "PASS",
+      "tests": [
+        "A28:"
+      ],
+      "note": "Impaired legal-principal recovery restores prior loss once."
+    },
+    {
+      "id": "A29",
+      "status": "PASS",
+      "tests": [
+        "A29:"
+      ],
+      "note": "R104/P0/U4 becomes R103/P0/U3; net worth -103."
+    },
+    {
+      "id": "A30",
+      "status": "PASS",
+      "tests": [
+        "A30-A31:"
+      ],
+      "note": "Discharge changes P/U, not R/F."
+    },
+    {
+      "id": "A31",
+      "status": "PASS",
+      "tests": [
+        "A31 amended",
+        "A30-A31:"
+      ],
+      "note": "Recorded contractual interest and penalties enter H once; principal/residual only enter F; excess and duplicate receipts rejected atomically."
+    },
+    {
+      "id": "A32",
+      "status": "PASS",
+      "tests": [
+        "A32:"
+      ],
+      "note": "Noncash possession does not recover; net settlement reconciles gross and costs."
+    },
+    {
+      "id": "A33",
+      "status": "PASS",
+      "tests": [
+        "A33:"
+      ],
+      "note": "Recovery income cannot exceed issuance allowance."
+    },
+    {
+      "id": "A34",
+      "status": "PASS",
+      "tests": [
+        "A34-A36:"
+      ],
+      "note": "Invalid reset rejected atomically."
+    },
+    {
+      "id": "A35",
+      "status": "PASS",
+      "tests": [
+        "A34-A36:"
+      ],
+      "note": "Authorized boundary reset records dates and new proof epoch."
+    },
+    {
+      "id": "A36",
+      "status": "PASS",
+      "tests": [
+        "A34-A36:",
+        "Staged boundary reset"
+      ],
+      "note": "Mid-quarter enactment stages future reset; old state retained."
+    },
+    {
+      "id": "A37",
+      "status": "PASS",
+      "tests": [
+        "A37-A40:"
+      ],
+      "note": "Missing reading does not break sequence of available gaps."
+    },
+    {
+      "id": "A38",
+      "status": "PASS",
+      "tests": [
+        "A38:"
+      ],
+      "note": "No first verified target means no allowance."
+    },
+    {
+      "id": "A39",
+      "status": "PASS",
+      "tests": [
+        "A39 GDP",
+        "A39 independent",
+        "A39 integrated"
+      ],
+      "note": "GDP annual revision gate, delayed releases, independent price availability and public vintage records."
+    },
+    {
+      "id": "A40",
+      "status": "PASS",
+      "tests": [
+        "A40 active"
+      ],
+      "note": "Active brake target persists; failed replacements and maturities affect actual B."
+    },
+    {
+      "id": "A41",
+      "status": "PASS",
+      "tests": [
+        "A41-A43:"
+      ],
+      "note": "Complete clean calendar quarter enables new episode."
+    },
+    {
+      "id": "A42",
+      "status": "PASS",
+      "tests": [
+        "A42 loan"
+      ],
+      "note": "Adversarial rollover/relabel requests are rejected atomically; financial state and persistent lineage stay unchanged, quarter remains disqualified, recertification retains the original clock and its hard stop. No actual contractual renewal is admitted."
+    },
+    {
+      "id": "A43",
+      "status": "PASS",
+      "tests": [
+        "A41-A43:"
+      ],
+      "note": "No clean quarter retains original clock; exhausted authority rejected."
+    },
+    {
+      "id": "A44",
+      "status": "PASS",
+      "tests": [
+        "A44 overdue"
+      ],
+      "note": "Partial overdue repayment reduces balance without resetting age."
+    },
+    {
+      "id": "A45",
+      "status": "PASS",
+      "tests": [
+        "A45 discharged"
+      ],
+      "note": "Discharged residual and recovery reconcile without overdue-principal double count."
+    },
+    {
+      "id": "A46",
+      "status": "PASS",
+      "tests": [
+        "A46 weekly"
+      ],
+      "note": "Weekly register supplements daily and immediate action records."
+    },
+    {
+      "id": "A47",
+      "status": "PASS",
+      "tests": [
+        "A47 weekly",
+        "A03 denominator",
+        "A44-A47:"
+      ],
+      "note": "Cash recovery reported separately from denominator room restoration."
+    },
+    {
+      "id": "A48",
+      "status": "PASS",
+      "tests": [
+        "A48 scheduled"
+      ],
+      "note": "Fixed scheduled payments continue after missing data; no additional allowance."
+    }
+  ]
+}
